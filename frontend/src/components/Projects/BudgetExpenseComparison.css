@@ -1,0 +1,39 @@
+/* Container for the chart with padding, shadow, and smooth animations */
+.chart-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.chart-container:hover {
+  transform: translateY(-10px);
+}
+
+.chart-title {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.loading-text {
+  font-size: 1.2rem;
+  color: #666;
+  text-align: center;
+}
+
+.error-text {
+  font-size: 1.2rem;
+  color: red;
+  text-align: center;
+}
+
+/* Animation for smooth hover effect on bars */
+.bar-chart-bar:hover {
+  transition: all 0.3s ease-in-out;
+}

@@ -1,0 +1,210 @@
+.wide-card {
+  width: 100%;
+  max-width: 600px; /* Customize width as needed */
+  margin: 0 auto;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: inset -5px -5px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s;
+  animation: popIn 1s ease-in-out;
+  backdrop-filter: blur(6px); /* Optional glass-like effect */
+  color: white;
+}
+.wide-card:hover {
+  transform: scale(1);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+.card-header-custom {
+  background-color: #196cd1;
+  font-size: 1.2rem;
+  border-radius: 10px 10px 0 0;
+}
+.details strong {
+  color: rgba(255, 199, 0, 1);
+}
+.details .col-data {
+  font-family: sans-serif;
+  font-style: italic;
+}
+/* Common button styles for uniformity */
+.responsive-button,
+.delete-button {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Icon styling to remain consistent across all buttons */
+.responsive-icon {
+  font-size: 1.5rem;
+}
+
+/* Ensure consistent layout for action buttons */
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center; /* Ensure vertical alignment */
+  gap: 15px;
+}
+
+/* Adjust button size and icon size for smaller screens */
+@media (max-width: 768px) {
+  .responsive-button,
+  .delete-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .responsive-icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* Add specific styles for the delete button to ensure no override */
+.delete-button {
+  /* Keep the same styles as responsive-button for consistency */
+  width: 50px !important;
+  height: 50px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Ensure delete button adjusts correctly on smaller screens */
+@media (max-width: 768px) {
+  .delete-button {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.2rem !important;
+  }
+}
+/* Container for search bar */
+.enhanced-search-bar {
+  max-width: 300px; /* Adjust width */
+  margin-right: 10px; /* Optional spacing */
+  border-radius: 30px; /* Round corners */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.3
+  ) !important; /* New semi-transparent dark background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  overflow: hidden; /* Rounded border for the entire input group */
+  transition: box-shadow 0.3s ease; /* Smooth shadow change on focus */
+}
+
+/* Change shadow on focus */
+.enhanced-search-bar:focus-within {
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Slight shadow on focus */
+}
+
+/* Input field styling */
+.search-input {
+  font-size: 14px; /* Smaller text size */
+  padding: 8px 12px; /* Adjust padding for small height */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.2
+  ) !important; /* Slightly darker input background */
+  color: #fff; /* White text color for better contrast */
+  border: none !important; /* Remove default border */
+  border-radius: 0; /* Prevent rounding of individual inputs */
+  box-shadow: none; /* Remove default input focus shadow */
+}
+
+.search-input::placeholder {
+  color: #ddd; /* Lighter placeholder color */
+}
+
+.search-input:focus {
+  outline: none; /* Remove default focus glow */
+  box-shadow: none; /* Remove any shadow effect */
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1px); /* Optional glass-like effect */
+  color: #fff; /* White text color for better contrast */
+}
+
+/* Search icon styling */
+.search-icon {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.4
+  ); /* Darker background for the icon area */
+  border: none !important; /* Remove border */
+  color: #007bff; /* Icon color (blue) */
+  font-size: 1.2rem; /* Slightly larger icon size */
+  padding: 6px 12px; /* Padding for better spacing */
+}
+
+/* Custom hover effect for the search bar */
+.enhanced-search-bar:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 576px) {
+  .enhanced-search-bar {
+    width: 100%; /* Full width on small screens */
+  }
+}
+
+/* Wrapper for range input and bubble */
+.range-input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Bubble for displaying range value */
+.bubble {
+  position: absolute;
+  top: -30px;
+  left: calc(50% - 20px); /* Adjust initial position */
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: left 0.2s ease; /* Smooth transition */
+}
+
+/* Adjust the bubble position based on range value */
+input[type="range"] {
+  width: 100%;
+  margin: 20px 0;
+  background-color: transparent; /* Remove default background */
+}
+
+input[type="range"]:hover {
+  cursor: pointer;
+}
+
+/* Make sure the bubble stays on top of the range input */
+input[type="range"]:focus + .bubble {
+  z-index: 1;
+  outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .range-input-wrapper {
+    width: 100%;
+  }
+}
+.nav-tabs .nav-link {
+  color: rgb(97, 218, 251);
+}

@@ -1,0 +1,198 @@
+/* Centering the form */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+/* Stunning card-like form wrapper */
+.task-form-wrapper {
+  padding: 20px;
+  border-radius: 25px;
+  max-width: 600px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: inset -5px -5px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s;
+  animation: popIn 1s ease-in-out;
+  backdrop-filter: blur(2px); /* Optional glass-like effect */
+  /* Brighten border on focus */
+  /* border-color: rgba(0, 0, 0, 0.8); 
+    color: white; 
+    background-color: rgba(255, 255, 255, 0.1);
+    outline: none; */
+}
+.task-form-wrapper:hover {
+  transform: scale(1);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+}
+/* Transparent form fields with rounded borders and gradient background */
+.task-form-wrapper input,
+.task-form-wrapper textarea,
+.task-form-wrapper .react-select__control {
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
+  border: none !important;
+  border-radius: 15px; /* Rounded borders */
+  padding: 20px;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(20px); /* Optional glass-like effect */
+  color: white; /* Text color */
+  box-shadow: inset -3px -3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+/* Placeholder text styling */
+.task-form-wrapper input::placeholder,
+.task-form-wrapper textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6); /* Lighter white for placeholder */
+  font-style: italic;
+  font-family: monospace;
+}
+
+/* On focus state */
+.task-form-wrapper input:focus,
+.task-form-wrapper textarea:focus,
+.task-form-wrapper .react-select__control--is-focused {
+  border-color: rgba(0, 0, 0, 0.8); /* Brighten border on focus */
+  color: white; /* Text color */
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 1); /* White glow */
+  cursor: pointer;
+}
+/* disable input */
+.task-form-wrapper input:disabled {
+  background-color: #495057;
+  color: #ced4da;
+}
+/* On focus state */
+.task-form-wrapper label {
+  color: white; /* Text color */
+  font-weight: 100;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  opacity: 1;
+}
+/* Button styling */
+.task-form-wrapper .btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #0dcaf0, #6610f2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.task-form-wrapper .btn-primary:hover {
+  background-color: #0056b3;
+  background: linear-gradient(
+    135deg,
+    #6f42c1,
+    #d63384
+  ); /* Stunning background gradient */
+  transform: translateY(-2px);
+}
+
+.task-form-wrapper button[type="submit"]:hover {
+  background: linear-gradient(45deg, #6610f2, #fd7e14);
+  transform: translateY(-3px);
+}
+.task-form-wrapper .text-center h3 {
+  font-weight: 500;
+  color: blue;
+  opacity: 0.7;
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 60px;
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); */
+  border-bottom: 1px rgba(255, 255, 255, 0.5);
+}
+/* Remove default calendar icon */
+.custom-date-input {
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  border-radius: 5px;
+  color: #495057;
+}
+
+/* Add custom calendar icon */
+.custom-date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2361dafb' viewBox='0 0 24 24'%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z'/%3E%3C/svg%3E")
+    no-repeat center;
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* Focus and hover effects for better user experience */
+.custom-date-input:focus {
+  border-color: #3f51b5;
+  box-shadow: 0 0 5px rgba(63, 81, 181, 0.5);
+}
+
+.task-form-wrapper span {
+  color: #ec6363fd;
+  font-size: 18px;
+}
+/* Responsive design */
+@media (max-width: 576px) {
+  .task-form-wrapper {
+    padding: 15px;
+  }
+
+  .task-form-wrapper input,
+  .task-form-wrapper textarea,
+  .task-form-wrapper .react-select__control {
+    font-size: 14px;
+  }
+
+  .task-form-wrapper .btn-primary {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+.text-danger {
+  font-weight: bold;
+  font-style: italic;
+  font-family: "Montserrat", sans-serif;
+  opacity: 1;
+}
+
+.text-center {
+  font-weight: 500;
+  color: #61dafb;
+  opacity: 1;
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 60px;
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); */
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+.task-form-wrapper {
+  color: #fff;
+}
+.task-form-wrapper span {
+  color: rgb(255, 17, 0);
+  color: #ef9c66;
+}

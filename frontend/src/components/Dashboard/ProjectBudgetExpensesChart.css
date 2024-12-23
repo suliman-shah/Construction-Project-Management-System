@@ -1,0 +1,60 @@
+.chart-container {
+  /* Box Shadow */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s ease-in-out; /* Smooth scaling transition */
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+/* Hover Effect */
+.chart-container:hover {
+  transform: scale(1.02); /* Slightly scale up on hover */
+}
+
+/* Scrollbar styling for webkit browsers (Chrome, Safari) */
+.chart-container::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+.chart-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Track color */
+  border-radius: 10px; /* Rounded corners for track */
+}
+
+.chart-container::-webkit-scrollbar-thumb {
+  background-color: #61dafb; /* Scrollbar color */
+  border-radius: 10px; /* Rounded corners for thumb */
+}
+
+/* Scrollbar styling for Firefox */
+.chart-container {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: #61dafb rgba(255, 255, 255, 0.1); /* Scrollbar color and track color */
+}
+
+/* Additional styling for the chart container */
+.chart-container {
+  overflow: auto; /* Enables scrolling */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 1s ease-in-out, pulse 2s infinite alternate; /* Added animations */
+}

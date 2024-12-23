@@ -1,0 +1,32 @@
+.footer-glass {
+  background: rgba(255, 255, 255, 0.1); /* Glassy effect */
+  backdrop-filter: blur(2px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.footer-icon {
+  transition: transform 0.3s ease;
+}
+
+.footer-icon:hover {
+  transform: scale(1.2); /* Grow effect on hover */
+}
+
+h5 {
+  color: #f8f9fa; /* Change heading color */
+}
+/* Footer.css */
+.footer {
+  opacity: 0; /* Start invisible */
+  transition: opacity 0.6s ease; /* Smooth transition */
+}
+
+/* Fade in when visible */
+.footer-fade-in {
+  opacity: 1; /* Fully visible */
+}
+
+/* Fade out when not visible */
+.footer-fade-out {
+  opacity: 0; /* Invisible */
+}

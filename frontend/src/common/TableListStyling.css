@@ -1,0 +1,254 @@
+.table-custom {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ) !important; /* Override Bootstrap's default table background */
+  color: white !important; /* Ensure text color is white */
+
+  box-shadow: inset -2px -2px #007bff75 !important ;
+  border-radius: 10px !important;
+  backdrop-filter: blur(10px) !important; /* Optional glass-like effect */
+}
+
+.table-custom th,
+.table-custom td {
+  background-color: transparent !important; /* Ensure cells don't override background */
+  color: white !important; /* Ensure text inside cells is white */
+  border: none !important ;
+}
+.table-custom th {
+  color: #36d9eb !important; /* White text color */
+  border-bottom: 3px solid #36d9eb !important; /* Custom bottom border for the header */
+  padding: 15px !important;
+  text-align: left !important ;
+  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+  font-weight: 400;
+}
+.col-sm-12 {
+}
+.row .mb-3 {
+}
+.table-custom tbody tr:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ) !important; /* Optional hover effect */
+}
+
+/*Adjust React Select width for small screens */
+.filter-select {
+  width: 100%; /* Full width for mobile */
+}
+
+@media (min-width: 768px) {
+  .filter-select {
+    width: 300px; /* Custom width for larger screens */
+  }
+}
+
+/* Responsive Action Buttons */
+.d-flex.justify-content-around > * {
+  margin: 0 5px;
+}
+
+@media (max-width: 576px) {
+  .d-flex.justify-content-around {
+    flex-direction: column;
+    align-items: center;
+  }
+  .d-flex.justify-content-around > * {
+    margin: 5px 0;
+    width: 100%; /* Full width buttons on mobile */
+  }
+}
+
+/* Scrollable table on small screens */
+.table-responsive {
+  overflow-x: auto; /* Ensure table is scrollable horizontally */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+}
+
+/* Reduce padding and font size for smaller screens */
+.table td,
+.table th {
+  padding: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .table td,
+  .table th {
+    font-size: 12px;
+  }
+}
+.table-custom {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.3
+  ) !important; /* Override Bootstrap's default table background */
+  color: white !important; /* Ensure text color is white */
+
+  box-shadow: inset -5px -5px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(10px); /* Optional glass-like effect */
+}
+
+.table-custom th,
+.table-custom td {
+  background-color: transparent !important; /* Ensure cells don't override background */
+  color: white !important; /* Ensure text inside cells is white */
+  border: none !important ;
+}
+.table-custom th {
+  color: white !important; /* White text color */
+  border-bottom: 3px solid #007bff !important; /* Custom bottom border for the header */
+  padding: 15px !important;
+  text-align: left !important ;
+
+  color: #faf2d3 !important;
+  color: #77e4c8 !important; /* White text color */
+  color: #faffaf !important;
+}
+.table-custom tbody tr:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ) !important; /* Optional hover effect */
+}
+/* Styling for the pagination container */
+.react-paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.react-paginate li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.react-paginate a {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #333;
+  border: none;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.react-paginate a:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
+}
+
+.react-paginate .selected a {
+  background-color: rgba(0, 123, 255, 0.8); /* Highlight selected page */
+  color: white;
+  font-weight: bold;
+}
+
+.react-paginate .disabled a {
+  background-color: rgba(255, 255, 255, 0.3); /* Dim disabled buttons */
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 768px) {
+  .react-paginate a {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .react-paginate a {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+}
+
+/* Add Task Button Container */
+
+/* .mb-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
+
+/* Add Icon Link Styling */
+.add-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem; /* Default size for larger screens */
+  height: 3rem; /* Default size for larger screens */
+  background-color: #4caf50; /* Base color */
+  color: white;
+  border-radius: 50%;
+  font-size: 1.5rem; /* Default icon size */
+  text-decoration: none;
+  box-shadow: 0 0 0.5rem rgba(0, 255, 0, 0.8); /* Initial glowing effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  animation: pulse 2s infinite; /* Pulsing effect */
+}
+
+/* Hover Effect */
+.add-icon:hover {
+  transform: scale(1.2); /* Enlarges on hover */
+  box-shadow: 0 0 1rem rgba(0, 255, 0, 1); /* Stronger glow on hover */
+}
+
+/* Pulsing Animation */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0.5rem rgba(0, 255, 0, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 1rem rgba(0, 255, 0, 1);
+  }
+  100% {
+    box-shadow: 0 0 0.5rem rgba(0, 255, 0, 0.8);
+  }
+}
+
+/* Tooltip Styling */
+.tooltip {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-size: 0.75rem; /* Adjusted for better fit */
+  padding: 0.25rem;
+  border-radius: 3px;
+  text-align: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+  /* Small screens */
+  .add-icon {
+    width: 2.5rem; /* Adjust size for small screens */
+    height: 2.5rem; /* Adjust size for small screens */
+    font-size: 1.2rem; /* Adjust icon size for small screens */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Medium screens */
+  .add-icon {
+    width: 2.75rem; /* Adjust size for medium screens */
+    height: 2.75rem; /* Adjust size for medium screens */
+    font-size: 1.3rem; /* Adjust icon size for medium screens */
+  }
+}

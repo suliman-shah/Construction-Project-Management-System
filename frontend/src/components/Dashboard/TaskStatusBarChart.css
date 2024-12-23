@@ -1,0 +1,163 @@
+.bar-chart-container {
+  background-color: #2c3e50; /* Dark background for a modern look */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+  color: #ecf0f1;
+  background-color: transparent;
+}
+.bar-chart-container {
+  background-color: transparent; /* Adjust background as needed */
+  overflow: auto; /* Enables scrolling if content overflows */
+  animation: fadeIn 1s ease-in-out, pulse 2s infinite alternate; /* Adding animations */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Box shadow */
+}
+
+/* Scrollbar styling for webkit browsers (Chrome, Safari) */
+.bar-chart-container::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+.bar-chart-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Track color */
+  border-radius: 10px; /* Rounded corners for track */
+}
+
+.bar-chart-container::-webkit-scrollbar-thumb {
+  background-color: #61dafb; /* Scrollbar color */
+  border-radius: 10px; /* Rounded corners for thumb */
+}
+
+/* Scrollbar styling for Firefox */
+.bar-chart-container {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: #61dafb rgba(255, 255, 255, 0.1); /* Scrollbar color and track color */
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Tooltip styling */
+.custom-tooltip {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #61dafb;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Add other necessary styles for your chart if needed */
+
+.bar-chart-container h3 {
+  text-align: center;
+  color: #61dafb; /* A bright accent color */
+  font-family: "Arial", sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* Recharts styling */
+.recharts-text {
+  font-family: "Arial", sans-serif;
+  fill: #ffffff; /* White text for readability */
+}
+
+.recharts-legend-item-text {
+  color: #ffffff;
+}
+
+/* Bar styling */
+.recharts-bar-rectangle {
+  transition: all 0.3s ease; /* Smooth animation on hover */
+}
+
+.recharts-bar-rectangle:hover {
+  opacity: 0.7; /* Slightly fade bars on hover for emphasis */
+  cursor: pointer;
+}
+
+/* Tooltip styling */
+.recharts-tooltip-wrapper {
+  background: rgba(0, 0, 0, 0.8); /* Darker background for the tooltip */
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 10px;
+}
+
+.custom-tooltip {
+  background-color: rgba(44, 62, 80, 0.9);
+  padding: 10px;
+  border-radius: 5px;
+  color: #ecf0f1;
+}
+
+.custom-tooltip .label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.custom-tooltip .intro {
+  margin-bottom: 3px;
+}
+
+@media (max-width: 768px) {
+  .bar-chart-container {
+    padding: 15px;
+  }
+
+  .bar-chart-container h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bar-chart-container {
+    padding: 10px;
+  }
+
+  .bar-chart-container h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .bar-chart-container {
+    padding: 15px;
+  }
+
+  .bar-chart-container h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bar-chart-container {
+    padding: 10px;
+  }
+
+  .bar-chart-container h3 {
+    font-size: 1.2rem;
+  }
+}

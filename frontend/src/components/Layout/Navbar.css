@@ -1,0 +1,113 @@
+/* Reset body padding and margin to avoid constraints */
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-width Navbar */
+.navbar {
+  background: linear-gradient(90deg, #1e2a38, #354f6b);
+  width: 100%;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  padding: 15px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: navbarFadeIn 1.2s ease-out;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Ensures navbar container stretches fully */
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Reset list styling */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  justify-content: space-around; /* Links spaced evenly */
+}
+
+/* Links styling */
+.nav-link {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Underline hover effect */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #ffcc29;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: #0056b3 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* Special Link Styling */
+.special-link {
+  color: #ff6f61;
+  font-weight: bold;
+}
+
+.special-link:hover {
+  color: #ffcc29;
+  transform: rotate(-2deg) scale(1.1);
+  transition: transform 0.4s ease, color 0.3s ease;
+}
+
+/* Search Bar */
+.navbar-search input {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 5px 15px;
+}
+
+.navbar-search button {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px 15px;
+  color: #007bff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-links {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .navbar-link {
+    font-size: 16px;
+    text-align: center;
+  }
+}
