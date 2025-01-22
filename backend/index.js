@@ -34,7 +34,7 @@ const db = mysql.createConnection({
 //connect database
 db.connect((err) => {
   if (err) throw err;
-  else console.log("MYSQL connected:");
+  else console.log("MYSQL connected Successfully:");
 });
 // console.log("DB_HOST:", process.env.DB_HOST);
 // console.log("DB_USER:", process.env.DB_USER);
