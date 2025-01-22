@@ -2,9 +2,15 @@ const express = require("express");
 const mysql = require("mysql2");
 const moment = require("moment");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+// Load environment variables
+dotenv.config();
+// dotenv.config({ debug: true });
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
+
 app.use(cors()); // middleware enable express to recive data from the react frontend
 app.use(express.urlencoded({ extended: true })); //middleware enable express to understand urlencoded data
 app.use(express.json()); // middleware enable express to understand json data
@@ -17,18 +23,23 @@ app.use((req, res, next) => {
   next();
 });
 
-//craete connection with database
+// Create database connection
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "construction_management",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
+
 //connect database
 db.connect((err) => {
   if (err) throw err;
   else console.log("MYSQL connected:");
 });
+// console.log("DB_HOST:", process.env.DB_HOST);
+// console.log("DB_USER:", process.env.DB_USER);
+// console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+// console.log("DB_NAME:", process.env.DB_NAME);
 
 /*=========================================================================================================================================================
 ===========================================================================================================================================================

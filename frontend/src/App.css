@@ -28,6 +28,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  /* background: linear-gradient(to right, #2c3e50, #2a2d34); */
 }
 
 .main-container {
