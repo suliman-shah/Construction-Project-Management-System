@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = "http://localhost:8080/projects";
+const API_BASE_URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/projects`;
 export const getAllProjects = () => {
   console.log("get all projects are called!!");
   return axios.get(API_BASE_URL);
@@ -19,22 +19,26 @@ export const createProjects = (projectData) => {
 };
 export const getProjectsExpenses = (projectId) => {
   console.log("get project expenses are called:");
-  return axios.get(`http://localhost:8080/projects/${projectId}/expenses`);
+  return axios.get(
+    `${import.meta.env.VITE_BACKEND_BASE_URL}/projects/${projectId}/expenses`
+  );
 };
 export const countProjects = () => {
   console.log("count projects are called:");
-  return axios.get("http://localhost:8080/count/projects");
+  return axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/count/projects`);
 };
 export const completedProjects = () => {
   console.log("completed are called:");
-  return axios.get("http://localhost:8080/completed/projects");
+  return axios.get(
+    `${import.meta.env.VITE_BACKEND_BASE_URL}/completed/projects`
+  );
 };
 export const ongoingProjects = () => {
   console.log("ongoing are called:");
-  return axios.get("http://localhost:8080/ongoing/projects");
+  return axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/ongoing/projects`);
 };
 
 export const pendingProjects = () => {
   console.log("pending are called:");
-  return axios.get("http://localhost:8080/pending/projects");
+  return axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/pending/projects`);
 };

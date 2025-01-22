@@ -15,7 +15,7 @@
 
 //   useEffect(() => {
 //     // Fetch project task status data from the API
-//     fetch("http://localhost:8080/projects-task-status")
+//
 //       .then((response) => response.json())
 //       .then((data) => {
 //         // Transform the data into the format needed for the bar chart
@@ -159,7 +159,7 @@ const TaskStatusBarChart = () => {
 
   useEffect(() => {
     // Fetch project task status data from the API
-    fetch("http://localhost:8080/projects-task-status")
+    fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/projects-task-status`)
       .then((response) => response.json())
       .then((data) => {
         // Transform the data into the format needed for the bar chart
@@ -313,7 +313,7 @@ export default TaskStatusBarChart;
 
 //   useEffect(() => {
 //     // Fetch project task status data from the API
-//     fetch("http://localhost:8080/projects-task-status")
+//
 //       .then((response) => response.json())
 //       .then((data) => {
 //         // Transform the data into the format needed for the bar chart
@@ -407,7 +407,7 @@ export default TaskStatusBarChart;
 
 //   useEffect(() => {
 //     // Fetch project task status data from the API
-//     fetch("http://localhost:8080/projects-task-status")
+//
 //       .then((response) => response.json())
 //       .then((data) => {
 //         // Transform the data into the format needed for the bar chart
@@ -468,7 +468,7 @@ export default TaskStatusBarChart;
 
 //   useEffect(() => {
 //     // Fetch project task status data from the API
-//     fetch("http://localhost:8080/projects-task-status")
+//
 //       .then((response) => response.json())
 //       .then((data) => {
 //         // Transform the data into the format needed for the bar chart

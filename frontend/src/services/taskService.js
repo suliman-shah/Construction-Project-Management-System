@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = "http://localhost:8080/task";
+const API_BASE_URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/task`;
 export const getAllTask = () => {
   return axios.get(API_BASE_URL);
 };

@@ -62,19 +62,21 @@ function ProjectDetails() {
     const fetchData = async () => {
       try {
         const projectResponse = await axios.get(
-          `http://localhost:8080/projects/${id}`
+          `${import.meta.env.VITE_BACKEND_BASE_URL}/projects/${id}`
         );
         const tasksResponse = await axios.get(
-          `http://localhost:8080/task?project_id=${id}`
+          `${import.meta.env.VITE_BACKEND_BASE_URL}/task?project_id=${id}`
         );
         const employeesResponse = await axios.get(
-          `http://localhost:8080/employees?project_id=${id}`
+          `${import.meta.env.VITE_BACKEND_BASE_URL}/employees?project_id=${id}`
         );
         const expensesResponse = await axios.get(
-          `http://localhost:8080/expenses?project_id=${id}`
+          `${import.meta.env.VITE_BACKEND_BASE_URL}/expenses?project_id=${id}`
         );
         const projectResourceResponse = await axios.get(
-          `http://localhost:8080/projectResources?project_id=${id}`
+          `${
+            import.meta.env.VITE_BACKEND_BASE_URL
+          }/projectResources?project_id=${id}`
         );
         getAllEmployees()
           .then((res) => {
@@ -116,7 +118,9 @@ function ProjectDetails() {
     setFilteredExpenses(filtered);
   };
   const fetchTasks = async () => {
-    const res = await axios.get(`http://localhost:8080/task?project_id=${id}`);
+    const res = await axios.get(
+      `${import.meta.env.VITE_BACKEND_BASE_URL}/task?project_id=${id}`
+    );
     return res;
   };
 
@@ -160,7 +164,11 @@ function ProjectDetails() {
 
   const confirmDeleteExpense = () => {
     axios
-      .delete(`http://localhost:8080/expenses/${expenseToDelete.id}`)
+      .delete(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/expenses/${
+          expenseToDelete.id
+        }`
+      )
       .then((response) => {
         alert(response.data);
         setExpenses(expenses.filter((exp) => exp.id !== expenseToDelete.id));
@@ -182,7 +190,11 @@ function ProjectDetails() {
   // Function to update project expenses after deletion or addition
   const updateProjectExpenses = () => {
     axios
-      .put(`http://localhost:8080/projects/${id}/calculate-expenses`)
+      .put(
+        `${
+          import.meta.env.VITE_BACKEND_BASE_URL
+        }/projects/${id}/calculate-expenses`
+      )
       .then((response) => {
         // Update the project expenses in state
         setProject({ ...project, expenses: response.data.totalExpenses });
@@ -214,7 +226,9 @@ function ProjectDetails() {
     const { name, value } = e.target;
     console.log("searching for task=", value);
     const SearchResult = await axios.get(
-      `http://localhost:8080/task?project_id=${id}&search=${value}`
+      `${
+        import.meta.env.VITE_BACKEND_BASE_URL
+      }/task?project_id=${id}&search=${value}`
     );
     setSerachTask(value);
     setTasks(SearchResult.data);
@@ -225,7 +239,9 @@ function ProjectDetails() {
     console.log("searching for employee=", value);
 
     const SearchResult = await axios.get(
-      `http://localhost:8080/employees?project_id=${id}&search=${value}`
+      `${
+        import.meta.env.VITE_BACKEND_BASE_URL
+      }/employees?project_id=${id}&search=${value}`
     );
     setsearchEmployee(value);
     setEmployees(SearchResult.data);
@@ -236,7 +252,9 @@ function ProjectDetails() {
     console.log("searching for employee=", value);
 
     const SearchResult = await axios.get(
-      `http://localhost:8080/projectResources?project_id=${id}&search=${value}`
+      `${
+        import.meta.env.VITE_BACKEND_BASE_URL
+      }/projectResources?project_id=${id}&search=${value}`
     );
     setSearchInventory(value);
     setSearchInventory(SearchResult.data);
@@ -867,8 +885,7 @@ export default ProjectDetails;
 //     const fetchExpenses = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:8080/projects/${id}/expenses`
-//         );
+//
 //         console.log(response.data);
 //         setExpenses(response.data);
 //       } catch (err) {

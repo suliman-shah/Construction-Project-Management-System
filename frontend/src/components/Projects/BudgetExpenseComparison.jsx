@@ -29,7 +29,7 @@
 //     const fetchBudgetExpenses = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:8080/project-budget-expenses/${projectId}`
+//
 //         );
 //         console.log("expenses=", response.data);
 //         setData(response.data);
@@ -113,7 +113,9 @@ function BudgetExpenseComparison({ projectId }) {
     const fetchBudgetExpenses = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/project-budget-expenses/${projectId}`
+          `${
+            import.meta.env.VITE_BACKEND_BASE_URL
+          }/project-budget-expenses/${projectId}`
         );
         console.log("expenses=", response.data);
         setData(response.data);

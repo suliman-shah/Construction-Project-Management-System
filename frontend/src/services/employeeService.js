@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8080/employees";
+const API_BASE_URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/employees`;
 
 export const getAllEmployees = () => {
   console.log(" getAllEmployees are called !!");

@@ -39,7 +39,7 @@
 //   });
 
 //   useEffect(() => {
-//     fetch("http://localhost:8080/projects-budget-expenses")
+//
 //       .then((response) => response.json())
 //       .then((data) => {
 //         if (Array.isArray(data) && data.length > 0) {
@@ -158,7 +158,7 @@ function ProjectBudgetExpensesChart() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8080/projects-budget-expenses")
+    fetch(`/projects-budget-expenses`)
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -276,7 +276,7 @@ export default ProjectBudgetExpensesChart;
 //   });
 
 //   useEffect(() => {
-//     fetch("http://localhost:8080/projects-budget-expenses")
+//
 //       .then((response) => response.json())
 //       .then((data) => {
 //         if (Array.isArray(data) && data.length > 0) {

@@ -9,7 +9,7 @@ const Navbar = ({ toggleSidebar }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const getSerachProject = async (searchQuery) => {
     return await axios.get(
-      `http://localhost:8080/projects?search=${searchQuery}`
+      `${import.meta.env.VITE_BACKEND_BASE_URL}/projects?search=${searchQuery}`
     );
   };
   const navigate = useNavigate();
