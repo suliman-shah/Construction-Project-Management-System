@@ -201,7 +201,7 @@ function ProjectBudgetExpensesChart() {
 
   if (!chartData)
     return (
-      <Link to="/Project/new" className="btn">
+      <Link to="/Project/new" className="btn btn-primary">
         Add New Project
       </Link>
     );

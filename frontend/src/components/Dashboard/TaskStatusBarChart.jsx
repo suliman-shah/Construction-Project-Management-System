@@ -213,7 +213,7 @@ const TaskStatusBarChart = () => {
 
   if (!data.length)
     return (
-      <Link to={"/tasks/new"} className="btn">
+      <Link to={"/tasks/new"} className="btn btn-primary">
         Add New Task
       </Link>
     );
