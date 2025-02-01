@@ -283,7 +283,17 @@ const ProjectResourcesList = () => {
           </div>
           {/* ProjectResources Table */}
           {loading ? (
-            <Spinner animation="border" />
+            <>
+              <Spinner animation="border" />
+              <p
+                style={{ color: "white", backgroundColor: "rgba(0,0,0, 0.5)" }}
+              >
+                The database for the Construction Project Management System has
+                not been uploaded yet, which is why the{" "}
+                <b> Project Resources </b> list is empty. Please be patient , it
+                will be uploaded soon.
+              </p>
+            </>
           ) : (
             <>
               <div className="table-responsive ">
