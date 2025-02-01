@@ -20,7 +20,7 @@ import InventoryPage from "./pages/InventoryPage";
 import SupplierPage from "./pages/SupplierPage";
 import ProjectResourcesPage from "./pages/ProjectResourcesPage";
 import Navbar from "./components/Layout/Navbar";
-import Sidebar from "./components/Layout/SideBar";
+import Sidebar from "./components/Layout/Sidebar";
 import Footer from "./components/Layout/Footer"; // Import Footer component
 import ProjectForm from "./components/Projects/ProjectForm";
 import ProjectUpdate from "./components/Projects/ProjectUpdate";
