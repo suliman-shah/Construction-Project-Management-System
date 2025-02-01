@@ -106,9 +106,24 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="row mt-4">
+        {/* <div className="row mt-4">
           <div className="col-12 ">
             <img src="/logo.png" alt="logo" width={300} height={300} />
+          </div>
+        </div> */}
+        <div className="row mt-4">
+          {" "}
+          {/* Fixed margin class */}
+          <div className="col-12 text-center">
+            {" "}
+            {/* Centered the image */}
+            <img
+              src="/logo.png" // Ensure the image path is correct
+              alt="logo"
+              className="img-fluid" // Makes the image responsive
+              width={300}
+              height={300}
+            />
           </div>
         </div>
 
