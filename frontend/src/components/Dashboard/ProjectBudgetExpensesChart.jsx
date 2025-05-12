@@ -158,7 +158,7 @@ function ProjectBudgetExpensesChart() {
   });
 
   useEffect(() => {
-    fetch(`/projects-budget-expenses`)
+    fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/projects-budget-expenses`)
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
