@@ -4,8 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Navbar.css"; // Add custom CSS for extra styling
 import { Menu } from "@mui/icons-material";
 import axios from "axios";
-
+import { useAuth } from "../Auth/AuthContext";
 const Navbar = ({ toggleSidebar }) => {
+  const { user, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const getSerachProject = async (searchQuery) => {
     return await axios.get(
@@ -101,10 +102,64 @@ const Navbar = ({ toggleSidebar }) => {
                 Project Resources
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/auth" className="nav-link ultra-link special-link">
-                Signup
-              </Link>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="profileDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i className="bi bi-person-circle fs-5"></i>
+              </a>
+              {user ? (
+                <ul
+                  className="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <span className="dropdown-item-text">
+                      <i className="bi bi-person me-2"></i>
+                      {user.firstName}
+                    </span>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/change-password">
+                      <i className="bi bi-key me-2"></i>
+                      Change Password
+                    </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <button className="dropdown-item" onClick={logout}>
+                      <i className="bi bi-box-arrow-right me-2"></i>
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              ) : (
+                <ul
+                  className="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <Link className="dropdown-item" to="/login">
+                      <i className="bi bi-box-arrow-in-right me-2"></i>Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/signup">
+                      <i className="bi bi-person-plus me-2"></i>Signup
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </li>
           </ul>
 

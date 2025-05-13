@@ -1,7 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = `${
-  import.meta.env.VITE_BACKEND_BASE_URL
-}/projectResources`;
+const API_BASE_URL = `projectResources`;
 export const getAllProjectResources = () => {
   console.log("get all projects Resources are called!!");
   return axios.get(API_BASE_URL);

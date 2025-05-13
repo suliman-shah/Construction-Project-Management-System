@@ -27,8 +27,6 @@ app.use(
 app.use(express.urlencoded({ extended: true })); //middleware enable express to understand urlencoded data
 app.use(express.json()); // middleware enable express to understand json data
 
-
-
 // Session configuration
 app.use(
   session({
@@ -127,7 +125,7 @@ const isAuthenticated = (req, res, next) => {
 // ======================== AUTHENTICATION ROUTES ======================== //
 
 // Signup route
-app.post("/api/auth/signup", async (req, res) => {
+app.post("/auth/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
 
   if (!email || !password || !firstName || !lastName) {
@@ -180,7 +178,7 @@ app.post("/api/auth/signup", async (req, res) => {
 });
 
 // Login route
-app.post("/api/auth/login", (req, res, next) => {
+app.post("/auth/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
@@ -202,7 +200,7 @@ app.post("/api/auth/login", (req, res, next) => {
 });
 
 // Logout route
-app.post("/api/auth/logout", (req, res) => {
+app.post("/auth/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
       return res.status(500).json({ message: "Error logging out" });
@@ -212,7 +210,7 @@ app.post("/api/auth/logout", (req, res) => {
 });
 
 // Check authentication status
-app.get("/api/auth/status", (req, res) => {
+app.get("/auth/status", (req, res) => {
   if (req.isAuthenticated()) {
     res.json({
       isAuthenticated: true,
@@ -228,6 +226,63 @@ app.get("/api/auth/status", (req, res) => {
   }
 });
 
+// Add this route after your other authentication routes
+app.post("/auth/change-password", isAuthenticated, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const userId = req.user.id;
+
+  try {
+    // Get user from database
+    db.query(
+      "SELECT * FROM users WHERE id = ?",
+      [userId],
+      async (err, results) => {
+        if (err) {
+          console.error("Database error:", err);
+          return res.status(500).json({ message: "Server error" });
+        }
+
+        if (results.length === 0) {
+          return res.status(404).json({ message: "User not found" });
+        }
+
+        const user = results[0];
+
+        // Verify old password
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+          return res
+            .status(400)
+            .json({ message: "Current password is incorrect" });
+        }
+
+        // Hash new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update password in database
+        db.query(
+          "UPDATE users SET password = ? WHERE id = ?",
+          [hashedPassword, userId],
+          (updateErr) => {
+            if (updateErr) {
+              console.error("Password update error:", updateErr);
+              return res
+                .status(500)
+                .json({ message: "Error updating password" });
+            }
+
+            res.json({ message: "Password changed successfully" });
+          }
+        );
+      }
+    );
+  } catch (err) {
+    console.error("Server error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`app is listening at port ${port}`);
 });
@@ -239,14 +294,12 @@ app.get("/", (req, res) => {
   res.send("Welcome to CPMS");
 });
 
-
 /*=========================================================================================================================================================
 ===========================================================================================================================================================
 ==============================================    CRUD Routes for Projects   ==============================================================================
 ===========================================================================================================================================================
 ===========================================================================================================================================================
 */
-
 
 //______________________________________________ Get all Projects __________//
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/expenses`;
+const API_BASE_URL = `/expenses`;
 export const getAllExpenses = () => {
   console.log(`get  All Expenses  : triggered??`);
   return axios.get(API_BASE_URL);

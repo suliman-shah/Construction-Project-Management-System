@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/inventory`;
+const API_BASE_URL = `/inventory`;
 export const getAllInventory = () => {
   console.log("get all Inventory are called!!");
   return axios.get(API_BASE_URL);
