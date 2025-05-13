@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 const API_BASE_URL = `/suppliers`;
 export const getAllSuppliers = () => {
   console.log("get all suppliers are called !!");

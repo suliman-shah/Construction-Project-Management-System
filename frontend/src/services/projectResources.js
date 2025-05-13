@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 const API_BASE_URL = `projectResources`;
 export const getAllProjectResources = () => {
   console.log("get all projects Resources are called!!");

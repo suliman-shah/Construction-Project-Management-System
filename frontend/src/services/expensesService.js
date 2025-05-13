@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 const API_BASE_URL = `/expenses`;
 export const getAllExpenses = () => {
   console.log(`get  All Expenses  : triggered??`);

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 const API_BASE_URL = `/inventory`;
 export const getAllInventory = () => {
   console.log("get all Inventory are called!!");
