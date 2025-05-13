@@ -81,7 +81,8 @@ const TaskList = () => {
   const navigate = useNavigate();
   const [success, setSuccess] = useState(location.state?.success || false);
   const [type, setType] = useState(location.state?.type || ""); // "add" or "update"
-  console.log(location);
+  // console.log("location=", location);
+  // console.log("navigate=", navigate);
   const [currentPage, setCurrentPage] = useState(0); // Current page state
   const tasksPerPage = 3; // Number of tasks per page
   const offset = currentPage * tasksPerPage; // Calculate offset for pagination
@@ -122,6 +123,7 @@ const TaskList = () => {
           value: project.id,
           label: project.name,
         }));
+        console.log("project-Options", projectsOptions);
         setProjects(projectsOptions);
       })
       .catch((err) => console.error("Error fetching projects:", err));
@@ -134,6 +136,7 @@ const TaskList = () => {
           value: employee.id,
           label: `${employee.first_name} ${employee.last_name}`,
         }));
+        console.log("employee-Options", employeeOptions);
         setEmployees(employeeOptions);
       })
       .catch((err) => console.error("Error fetching employees:", err));

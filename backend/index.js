@@ -27,6 +27,12 @@ app.use(
 app.use(express.urlencoded({ extended: true })); //middleware enable express to understand urlencoded data
 app.use(express.json()); // middleware enable express to understand json data
 
+// Add request logging middleware here
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+
 // Session configuration
 app.use(
   session({
@@ -290,9 +296,9 @@ app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
   next();
 });
-app.get("/", (req, res) => {
-  res.send("Welcome to CPMS");
-});
+// app.get("/", (req, res) => {
+//   res.send("Welcome to CPMS");
+// });
 
 /*=========================================================================================================================================================
 ===========================================================================================================================================================
