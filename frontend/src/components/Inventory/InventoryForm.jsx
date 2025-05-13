@@ -49,7 +49,7 @@ const InventoryForm = () => {
       borderRadius: "5px",
     }),
   };
-
+  console.log("i am called ");
   // inventory states
   const [inventory, setInventory] = useState({
     supplier_id: null,
@@ -98,7 +98,7 @@ const InventoryForm = () => {
     //   error = "Status is required.";
     // }
     else if (name === "supplier_id" && !value) {
-      error = "Supplier is required.";
+      error = "Supplier is required. first upload the supplier details";
     }
     return error;
   };
@@ -143,9 +143,9 @@ const InventoryForm = () => {
     }
   };
 
-  if (!suppliers.length) {
-    return <Spinner animation="border" />;
-  }
+  // if (!suppliers.length) {
+  //   return <Spinner animation="border" />;
+  // }
 
   return (
     <div className="container mt-4 d-flex justify-content-center">
