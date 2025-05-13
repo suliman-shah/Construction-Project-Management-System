@@ -1,11 +1,12 @@
-
-
-
 const express = require("express");
 const mysql = require("mysql2");
 const moment = require("moment");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
+const session = require("express-session");
 
 // Load environment variables
 dotenv.config();
@@ -14,17 +15,36 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(cors()); // middleware enable express to recive data from the react frontend
+// Middleware
+// app.use(cors()); // middleware enable express to recive data from the react frontend
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    credentials: true,
+  })
+);
+
 app.use(express.urlencoded({ extended: true })); //middleware enable express to understand urlencoded data
 app.use(express.json()); // middleware enable express to understand json data
 
-app.listen(port, () => {
-  console.log(`app is listening at port ${port}`);
-});
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
-  next();
-});
+
+
+// Session configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your-secret-key-here",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
+
+// Passport initialization
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Create database connection
 const db = mysql.createConnection({
@@ -44,15 +64,189 @@ console.log("DB_USER:", process.env.DB_USER);
 console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
 console.log("DB_NAME:", process.env.DB_NAME);
 
+// Passport configuration
+passport.use(
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      try {
+        db.query(
+          "SELECT * FROM users WHERE email = ?",
+          [email],
+          async (err, results) => {
+            if (err) return done(err);
+
+            if (results.length === 0) {
+              return done(null, false, {
+                message: "Incorrect email or password.",
+              });
+            }
+
+            const user = results[0];
+            const isMatch = await bcrypt.compare(password, user.password);
+
+            if (!isMatch) {
+              return done(null, false, {
+                message: "Incorrect email or password.",
+              });
+            }
+
+            return done(null, user);
+          }
+        );
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  db.query(
+    "SELECT id, email, first_name, last_name FROM users WHERE id = ?",
+    [id],
+    (err, results) => {
+      if (err) return done(err);
+      done(null, results[0]);
+    }
+  );
+});
+
+// Authentication middleware
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ message: "Unauthorized" });
+};
+
+// ======================== AUTHENTICATION ROUTES ======================== //
+
+// Signup route
+app.post("/api/auth/signup", async (req, res) => {
+  const { email, password, firstName, lastName } = req.body;
+
+  if (!email || !password || !firstName || !lastName) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email],
+      async (err, results) => {
+        if (err) throw err;
+
+        if (results.length > 0) {
+          return res.status(400).json({ message: "Email already in use" });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = {
+          email,
+          password: hashedPassword,
+          first_name: firstName,
+          last_name: lastName,
+        };
+
+        db.query("INSERT INTO users SET ?", newUser, (err, result) => {
+          if (err) throw err;
+
+          req.login({ id: result.insertId, ...newUser }, (err) => {
+            if (err) throw err;
+            res.json({
+              success: true,
+              user: {
+                id: result.insertId,
+                email: newUser.email,
+                firstName: newUser.first_name,
+                lastName: newUser.last_name,
+              },
+            });
+          });
+        });
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error during signup" });
+  }
+});
+
+// Login route
+app.post("/api/auth/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      return res.status(401).json({ message: info.message });
+    }
+    req.login(user, (err) => {
+      if (err) return next(err);
+      return res.json({
+        success: true,
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.first_name,
+          lastName: user.last_name,
+        },
+      });
+    });
+  })(req, res, next);
+});
+
+// Logout route
+app.post("/api/auth/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: "Error logging out" });
+    }
+    res.json({ success: true, message: "Logged out successfully" });
+  });
+});
+
+// Check authentication status
+app.get("/api/auth/status", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({
+      isAuthenticated: true,
+      user: {
+        id: req.user.id,
+        email: req.user.email,
+        firstName: req.user.first_name,
+        lastName: req.user.last_name,
+      },
+    });
+  } else {
+    res.json({ isAuthenticated: false, user: null });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`app is listening at port ${port}`);
+});
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+app.get("/", (req, res) => {
+  res.send("Welcome to CPMS");
+});
+
+
 /*=========================================================================================================================================================
 ===========================================================================================================================================================
 ==============================================    CRUD Routes for Projects   ==============================================================================
 ===========================================================================================================================================================
 ===========================================================================================================================================================
 */
-app.get("/", (req, res) => {
-  res.send("welcome to CPMS");
-});
+
 
 //______________________________________________ Get all Projects __________//
 
