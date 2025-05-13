@@ -682,6 +682,47 @@ app.get("/ongoing/projects", (req, res) => {
     console.log(error);
   }
 });
+
+// Add this route after your other project routes
+app.get("/projects/:id/employees", (req, res) => {
+  const { id } = req.params;
+  const query = `
+    SELECT 
+      e.id,
+      e.first_name,
+      e.last_name,
+      e.role,
+      e.project_id
+    FROM employees e
+    WHERE e.project_id = ?
+  `;
+
+  try {
+    db.query(query, [id], (err, result) => {
+      if (err) {
+        console.error("Error fetching project employees:", err);
+        return res.status(500).json({
+          error: "An error occurred while fetching project employees",
+        });
+      }
+
+      // Transform the data for the frontend Select component
+      const formattedEmployees = result.map((employee) => ({
+        value: employee.id,
+        label: `${employee.first_name} ${employee.last_name} (${employee.role})`,
+      }));
+
+      console.log("Project employees:", formattedEmployees);
+      res.json(formattedEmployees);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Server error while fetching project employees",
+    });
+  }
+});
+
 /*=========================================================================================================================================================
 ===========================================================================================================================================================
 ==============================================    CRUD Routes for Suppliers   =============================================================================

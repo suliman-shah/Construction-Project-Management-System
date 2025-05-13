@@ -43,3 +43,8 @@ export const pendingProjects = () => {
   console.log("pending are called:");
   return axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/pending/projects`);
 };
+
+export const getProjectEmployees = (projectId) => {
+  console.log("get project employees called:");
+  return axios.get(`${API_BASE_URL}/${projectId}/employees`);
+};
