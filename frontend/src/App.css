@@ -1,14 +1,56 @@
+/* Variables & Root Styles */
+:root {
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --color-primary: #007bff;
+  --color-secondary: #2c3e50;
+  --color-light: #f8f9fa;
+  --color-dark: #2a2d34;
+  --transition-speed: 0.3s;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation Keyframes */
 @keyframes gradientAnimation {
   0% {
-    background: linear-gradient(to right, #2c3e50, #2a2d34);
+    background: linear-gradient(
+      to right,
+      var(--color-secondary),
+      var(--color-dark)
+    );
   }
   50% {
-    background: linear-gradient(to right, #2c3e50, #4b5d6c);
+    background: linear-gradient(to right, var(--color-secondary), #4b5d6c);
   }
   100% {
-    background: linear-gradient(to right, #2c3e50, #2a2d34);
+    background: linear-gradient(
+      to right,
+      var(--color-secondary),
+      var(--color-dark)
+    );
   }
 }
+
+/* Base Styles */
+body {
+  font-family: var(--font-body);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+/* Layout Styles */
 .App {
   min-height: 100vh;
   display: flex;
@@ -17,7 +59,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed; /* This keeps the background fixed while scrolling */
+  background-attachment: fixed;
 }
 
 .main-container {
@@ -25,21 +67,57 @@
   flex: 1;
 }
 
+.main-content {
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
+  background-color: transparent;
+}
+
 .content {
   padding: 1rem;
-  /* background-color: rgba(255, 255, 255, 0.8); */
-  /* Semi-transparent white */
   border-radius: 8px;
   margin: 1rem;
   flex: 1;
 }
 
-.main-content {
-  padding-top: 64px; /* Should match navbar height */
-  min-height: calc(100vh - 64px);
-  background-color: transparent; /* Change from #f8f9fa to transparent */
+/* Navigation Styles */
+.nav-link,
+.dropdown-item {
+  font-family: var(--font-body);
+  font-weight: 500;
 }
 
+.navbar-brand.logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* Component Styles */
+.card-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.card-text,
+.table {
+  font-family: var(--font-body);
+}
+
+/* Form Elements */
+input,
+button,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+.btn {
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+}
+
+/* Authentication Styles */
 .auth-form {
   max-width: 400px;
   margin: 2rem auto;
@@ -64,7 +142,7 @@
 }
 
 .auth-form button {
-  background: #007bff;
+  background: var(--color-primary);
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -72,25 +150,22 @@
   cursor: pointer;
 }
 
-.error {
-  color: red;
-  margin-bottom: 1rem;
-}
-
 .auth-layout {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, var(--color-light) 0%, #e9ecef 100%);
 }
 
 .auth-layout h1 {
-  color: #2c3e50;
+  color: var(--color-secondary);
   font-size: 2.5rem;
-}
-
-.auth-layout .btn {
-  transition: all 0.3s ease;
 }
 
 .auth-layout .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
+}
+
+/* Utility Classes */
+.error {
+  color: red;
+  margin-bottom: 1rem;
 }

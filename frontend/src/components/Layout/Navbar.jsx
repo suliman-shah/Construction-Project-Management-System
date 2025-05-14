@@ -69,9 +69,12 @@ const Navbar = () => {
       }`}
     >
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
-          DashBoard
+        <Link to="/" className="navbar-brand logo">
+          VireoBuild
         </Link>
+        {/* <Link to="/" className="nav-link dashboard-link">
+          Dashboard
+        </Link> */}
 
         <button
           className="navbar-toggler"

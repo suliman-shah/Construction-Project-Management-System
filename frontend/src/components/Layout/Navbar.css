@@ -15,9 +15,11 @@ html {
 .navbar {
   background: linear-gradient(
     90deg,
-    #007bff,
-    #0056b3
-  ) !important; /* Force gradient with !important */
+    rgba(0, 123, 255, 0.5),
+    rgba(0, 86, 179, 0.5)
+  ) !important; /* 50% transparent gradient */
+  backdrop-filter: blur(8px); /* Add blur effect for better readability */
+  -webkit-backdrop-filter: blur(8px); /* For Safari support */
   height: 64px;
   padding: 0 1.5rem;
   position: fixed;
@@ -39,6 +41,28 @@ html {
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Logo styling */
+.navbar-brand.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 2rem;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(45deg, #fff, #e6e6e6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand.logo:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
 /* Navigation items */
 .navbar-nav {
   display: flex;
@@ -54,6 +78,7 @@ html {
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
   font-weight: 500;
+  font-family: "Inter", sans-serif;
   padding: 0.5rem 1rem;
   transition: all 0.2s ease;
 }
@@ -83,7 +108,7 @@ html {
 
 /* Dropdown styling */
 .dropdown-menu {
-  background: #fff;
+  background: linear-gradient(90deg, #007bff, #0056b3);
   border: none;
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -93,8 +118,10 @@ html {
 }
 
 .dropdown-item {
-  color: #2c3e50;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
   padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
@@ -104,20 +131,34 @@ html {
 
 /* Update dropdown item icons animation */
 .dropdown-item i {
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 /* Remove existing hover transform on icons if any */
 .dropdown-item:hover {
-  background: #f8f9fa;
-  color: #2c3e50;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .dropdown-item:hover i {
-  color: #2c3e50;
+  color: #fff;
   transform: translateX(3px);
+}
+
+/* Dashboard link styling */
+.dashboard-link {
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  padding: 0.5rem 1rem !important;
+  margin: 0 !important;
+}
+
+.dashboard-link:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Search bar styling */
@@ -158,6 +199,111 @@ html {
   color: #fff;
 }
 
+/* Profile Icon Styling - Updated */
+.nav-item:last-child .nav-link {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.1)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item:last-child .nav-link::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #007bff, #00ff9d, #007bff);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-item:last-child .nav-link .bi-person-circle {
+  font-size: 1.4rem;
+  color: #fff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
+}
+
+.nav-item:last-child .nav-link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.nav-item:last-child .nav-link:hover::before {
+  opacity: 0.3;
+}
+
+.nav-item:last-child .nav-link:hover .bi-person-circle {
+  transform: scale(1.1);
+}
+
+/* Profile Dropdown Positioning */
+.nav-item:last-child .dropdown-menu {
+  left: auto;
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 220px;
+}
+
+/* Mobile Responsiveness for Profile */
+@media (max-width: 991px) {
+  .nav-item:last-child {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-item:last-child .nav-link {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-item:last-child .dropdown-menu {
+    position: static;
+    width: 100%;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+}
+
+/* Profile Dropdown Items */
+.nav-item:last-child .dropdown-item {
+  padding: 0.75rem 1.25rem;
+  font-weight: 500;
+}
+
+.nav-item:last-child .dropdown-item i {
+  width: 20px;
+  text-align: center;
+  margin-right: 0.75rem;
+}
+
+.nav-item:last-child .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+  margin: 0.5rem 0;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 991px) {
   .navbar-collapse {
@@ -170,7 +316,7 @@ html {
   }
 
   .dropdown-menu {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(90deg, #007bff, #0056b3);
     box-shadow: none;
     border-radius: 4px;
     margin: 0.5rem 0;
@@ -181,7 +327,7 @@ html {
   }
 
   .dropdown-item i {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .dropdown-item:hover {
@@ -216,5 +362,28 @@ html {
   .search-container {
     max-width: 100%;
     margin: 0.5rem 0;
+  }
+
+  .navbar-brand.logo {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  .dashboard-link {
+    padding: 0.5rem 0 !important;
+  }
+
+  .nav-item:last-child .nav-link {
+    margin: 0.5rem 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-item:last-child .dropdown-menu {
+    position: static;
+    margin-top: 0;
   }
 }
