@@ -21,12 +21,20 @@ const Navbar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery) {
+    if (searchQuery.trim()) {
+      // Only search if query is not empty
       getSerachProject(searchQuery)
         .then((project) => {
-          navigate(`/projects/detail/${project.data[0].id}`);
+          if (project.data && project.data.length > 0) {
+            navigate(`/projects/detail/${project.data[0].id}`);
+          } else {
+            // Handle no results found
+            console.log("No projects found");
+          }
         })
-        .catch((err) => console.log(`err in fetching project ${searchQuery}`));
+        .catch((err) => {
+          console.log(`Error in fetching project: ${err}`);
+        });
     }
   };
 
@@ -97,17 +105,20 @@ const Navbar = () => {
               <ul className="dropdown-menu">
                 <li>
                   <Link className="dropdown-item" to="/projects">
-                    View All Projects
+                    <i className="bi bi-kanban me-2"></i>
+                    <span>View All Projects</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/projects/add">
-                    Add Project
+                    <i className="bi bi-plus-circle me-2"></i>
+                    <span>Add Project</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/projects/timeline">
-                    Project Timeline
+                    <i className="bi bi-calendar-range me-2"></i>
+                    <span>Project Timeline</span>
                   </Link>
                 </li>
               </ul>
@@ -127,17 +138,20 @@ const Navbar = () => {
               <ul className="dropdown-menu">
                 <li>
                   <Link className="dropdown-item" to="/tasks">
-                    View All Tasks
+                    <i className="bi bi-list-task me-2"></i>
+                    <span>View All Tasks</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/tasks/add">
-                    Add Task
+                    <i className="bi bi-plus-square me-2"></i>
+                    <span>Add Task</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/tasks/calendar">
-                    Task Calendar
+                    <i className="bi bi-calendar-check me-2"></i>
+                    <span>Task Calendar</span>
                   </Link>
                 </li>
               </ul>
@@ -157,17 +171,20 @@ const Navbar = () => {
               <ul className="dropdown-menu">
                 <li>
                   <Link className="dropdown-item" to="/employees">
-                    View All Employees
+                    <i className="bi bi-people me-2"></i>
+                    <span>View All Employees</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/employees/add">
-                    Add Employee
+                    <i className="bi bi-person-plus me-2"></i>
+                    <span>Add Employee</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/employees/schedule">
-                    Employee Schedule
+                    <i className="bi bi-calendar-week me-2"></i>
+                    <span>Employee Schedule</span>
                   </Link>
                 </li>
               </ul>
@@ -187,41 +204,54 @@ const Navbar = () => {
               <ul className="dropdown-menu">
                 <li>
                   <Link className="dropdown-item" to="/expenses">
-                    Expenses
+                    <i className="bi bi-cash-coin me-2"></i>
+                    <span>Expenses</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/inventory">
-                    Inventory
+                    <i className="bi bi-box-seam me-2"></i>
+                    <span>Inventory</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/suppliers">
-                    Suppliers
+                    <i className="bi bi-truck me-2"></i>
+                    <span>Suppliers</span>
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/ProjectResources">
-                    Project Resources
+                    <i className="bi bi-gear me-2"></i>
+                    <span>Project Resources</span>
                   </Link>
                 </li>
               </ul>
             </li>
 
             <li className="nav-item">
-              <form className="d-flex" onSubmit={handleSearch}>
-                <input
-                  className="form-control me-2 rounded-pill"
-                  type="search"
-                  placeholder="Search project...."
-                  aria-label="Search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button className="btn btn-light rounded-pill" type="submit">
-                  <i className="bi bi-search"></i>
-                </button>
-              </form>
+              <div className="search-container">
+                <form className="search-form" onSubmit={handleSearch}>
+                  <div className="search-input-wrapper">
+                    <input
+                      className="search-input"
+                      type="search"
+                      placeholder="Search projects..."
+                      aria-label="Search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          handleSearch(e);
+                        }
+                      }}
+                    />
+                    <button className="search-button" type="submit">
+                      <i className="bi bi-search"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
             </li>
 
             <li className="nav-item dropdown">
