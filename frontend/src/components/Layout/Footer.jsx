@@ -1,138 +1,130 @@
-import React, { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Footer.css"; // Make sure to import your custom CSS
+import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import "./Footer.css";
 
 const Footer = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleScroll = () => {
-    const footerElement = document.getElementById("footer");
-    if (footerElement) {
-      const rect = footerElement.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      // Check if the footer is in the viewport
-      if (rect.top <= windowHeight && rect.bottom >= 0) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false); // Fade out when not in view
-      }
-    }
-  };
+  const footerRef = useRef(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Add or remove animation class based on visibility
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+          } else {
+            entry.target.classList.remove("animate");
+          }
+        });
+      },
+      {
+        threshold: 0.2, // 20% of the footer must be visible
+        rootMargin: "50px", // Adds margin to trigger animation earlier
+      }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    // Cleanup observer on component unmount
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      if (footerRef.current) {
+        observer.unobserve(footerRef.current);
+      }
     };
   }, []);
 
   return (
-    <footer
-      id="footer"
-      className={`footer bg-dark text-white py-4 mt-auto ${
-        isVisible ? "footer-fade-in" : "footer-fade-out"
-      }`}
-    >
+    <footer ref={footerRef} className="footer footer-glass">
       <div className="container">
-        <div className="row">
-          {/* Column 1: About */}
-          <div className="col-md-4 mb-4">
-            <h5>About Us</h5>
-            <p>
-              We are a leading construction project management company,
-              dedicated to delivering high-quality projects with a focus on
-              client satisfaction and innovation.
+        <div className="footer-content">
+          {/* Logo and About Section */}
+          <div className="footer-section" style={{ "--section-index": 0 }}>
+            <Link to="/" className="footer-logo">
+              VireoBuild
+            </Link>
+            <p className="footer-description">
+              Providing professional construction management solutions with
+              excellence and innovation.
             </p>
           </div>
-          {/* Column 2: Quick Links */}
-          <div className="col-md-4 mb-4">
+
+          {/* Quick Links Section */}
+          <div className="footer-section" style={{ "--section-index": 1 }}>
             <h5>Quick Links</h5>
-            <ul className="list-unstyled">
+            <ul className="footer-links">
               <li>
-                <a href="/projects" className="text-white">
-                  Projects
-                </a>
+                <Link to="/projects">Projects</Link>
               </li>
               <li>
-                <a href="/tasks" className="text-white">
-                  Tasks
-                </a>
+                <Link to="/tasks">Tasks</Link>
               </li>
               <li>
-                <a href="/employees" className="text-white">
-                  Employees
-                </a>
+                <Link to="/employees">Team</Link>
               </li>
               <li>
-                <a href="/inventory" className="text-white">
-                  Inventory
-                </a>
-              </li>
-              <li>
-                <a href="/expenses" className="text-white">
-                  Expenses
-                </a>
+                <Link to="/resources">Resources</Link>
               </li>
             </ul>
           </div>
-          {/* Column 3: Contact Us */}
-          <div className="col-md-4 mb-4">
+
+          {/* Services Section */}
+          <div className="footer-section" style={{ "--section-index": 2 }}>
+            <h5>Services</h5>
+            <ul className="footer-links">
+              <li>
+                <Link to="/inventory">Inventory Management</Link>
+              </li>
+              <li>
+                <Link to="/suppliers">Supplier Network</Link>
+              </li>
+              <li>
+                <Link to="/expenses">Financial Tracking</Link>
+              </li>
+              <li>
+                <Link to="/ProjectResources">Resource Planning</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Section */}
+          <div className="footer-section" style={{ "--section-index": 3 }}>
             <h5>Contact Us</h5>
-            <p>
-              <i className="bi bi-envelope-fill"></i> info@construction.com
-            </p>
-            <p>
-              <i className="bi bi-phone-fill"></i> +1 234 567 890
-            </p>
-            <p>
-              <i className="bi bi-geo-alt-fill"></i> 123 Main St, City, Country
-            </p>
-          </div>
-        </div>
-        {/* Social Media Icons */}
-        <div className="row text-center">
-          <div className="col-12">
-            <a href="#" className="text-white mx-2 footer-icon">
-              <i className="bi bi-facebook"></i>
-            </a>
-            <a href="#" className="text-white mx-2 footer-icon">
-              <i className="bi bi-twitter"></i>
-            </a>
-            <a href="#" className="text-white mx-2 footer-icon">
-              <i className="bi bi-instagram"></i>
-            </a>
-            <a href="#" className="text-white mx-2 footer-icon">
-              <i className="bi bi-linkedin"></i>
-            </a>
-          </div>
-        </div>
-        {/* <div className="row mt-4">
-          <div className="col-12 ">
-            <img src="/logo.png" alt="logo" width={300} height={300} />
-          </div>
-        </div> */}
-        <div className="row mt-4">
-          {" "}
-          {/* Fixed margin class */}
-          <div className="col-12 text-center">
-            {" "}
-            {/* Centered the image */}
-            <img
-              src="/logo.png" // Ensure the image path is correct
-              alt="logo"
-              className="img-fluid" // Makes the image responsive
-              width={300}
-              height={300}
-            />
+            <div className="contact-info">
+              <i className="bi bi-geo-alt"></i>
+              <span>123 Construction Ave, City, Country</span>
+            </div>
+            <div className="contact-info">
+              <i className="bi bi-envelope"></i>
+              <span>contact@vireobuild.com</span>
+            </div>
+            <div className="contact-info">
+              <i className="bi bi-telephone"></i>
+              <span>+1 234 567 890</span>
+            </div>
           </div>
         </div>
 
         {/* Footer Bottom */}
-        <div className="row mt-4">
-          <div className="col-12 text-center">
+        <div className="footer-bottom">
+          <div className="social-links">
+            <a href="#" className="footer-icon">
+              <i className="bi bi-linkedin"></i>
+            </a>
+            <a href="#" className="footer-icon">
+              <i className="bi bi-twitter"></i>
+            </a>
+            <a href="#" className="footer-icon">
+              <i className="bi bi-facebook"></i>
+            </a>
+            <a href="#" className="footer-icon">
+              <i className="bi bi-instagram"></i>
+            </a>
+          </div>
+          <div className="copyright">
             <p>
-              &copy; {new Date().getFullYear()} Construction Company. All rights
-              reserved.
+              &copy; {new Date().getFullYear()} VireoBuild. All rights reserved.
             </p>
           </div>
         </div>
