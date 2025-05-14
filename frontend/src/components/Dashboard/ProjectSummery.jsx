@@ -44,9 +44,9 @@ const ProjectSummery = () => {
         <div className="col">
           <div className="card l-bg-cherry">
             <div className="card-statistic-3 p-4">
-              <div className="card-icon card-icon-large">
+              {/* <div className="card-icon card-icon-large">
                 <Assignment style={{ fontSize: "40px", color: "#fff" }} />
-              </div>
+              </div> */}
               <div className="mb-4">
                 <h5 className="card-title mb-0">Completed Projects</h5>
               </div>
@@ -67,7 +67,7 @@ const ProjectSummery = () => {
                   </span>
                 </div>
               </div>
-              <div className="progress mt-1" style={{ height: "8px" }}>
+              {/* <div className="progress mt-1" style={{ height: "8px" }}>
                 <div
                   className="progress-bar l-bg-cyan"
                   role="progressbar"
@@ -76,7 +76,7 @@ const ProjectSummery = () => {
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -101,13 +101,11 @@ const ProjectSummery = () => {
                 </div>
                 <div className="col-4 text-right">
                   <span>
-                    <Assignment
-                      style={{ fontSize: "40px", color: "#28a745" }}
-                    />
+                    <Assignment style={{ fontSize: "40px", color: "#fff" }} />
                   </span>
                 </div>
               </div>
-              <div className="progress mt-1" style={{ height: "8px" }}>
+              {/* <div className="progress mt-1" style={{ height: "8px" }}>
                 <div
                   className="progress-bar l-bg-green"
                   role="progressbar"
@@ -116,7 +114,7 @@ const ProjectSummery = () => {
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -141,13 +139,11 @@ const ProjectSummery = () => {
                 </div>
                 <div className="col-4 text-right">
                   <span>
-                    <AccessAlarm
-                      style={{ fontSize: "40px", color: "#dc3545" }}
-                    />
+                    <AccessAlarm style={{ fontSize: "40px", color: "#fff" }} />
                   </span>
                 </div>
               </div>
-              <div className="progress mt-1" style={{ height: "8px" }}>
+              {/* <div className="progress mt-1" style={{ height: "8px" }}>
                 <div
                   className="progress-bar l-bg-orange"
                   role="progressbar"
@@ -156,7 +152,7 @@ const ProjectSummery = () => {
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -182,12 +178,12 @@ const ProjectSummery = () => {
                 <div className="col-4 text-right">
                   <span>
                     <HourglassEmpty
-                      style={{ fontSize: "40px", color: "#ffc107" }}
+                      style={{ fontSize: "40px", color: "#fff" }}
                     />
                   </span>
                 </div>
               </div>
-              <div className="progress mt-1" style={{ height: "8px" }}>
+              {/* <div className="progress mt-1" style={{ height: "8px" }}>
                 <div
                   className="progress-bar l-bg-cyan"
                   role="progressbar"
@@ -196,7 +192,7 @@ const ProjectSummery = () => {
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

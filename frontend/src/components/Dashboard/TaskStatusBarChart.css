@@ -1,10 +1,10 @@
 .bar-chart-container {
-  background-color: #2c3e50; /* Dark background for a modern look */
+  background-color: #2c3e50 !important; /* Dark background for a modern look */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   color: #ecf0f1;
-  background-color: transparent;
+  /* background-color: transparent; */
 }
 .bar-chart-container {
   background-color: transparent; /* Adjust background as needed */

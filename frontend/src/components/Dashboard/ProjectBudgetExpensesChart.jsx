@@ -221,7 +221,8 @@ function ProjectBudgetExpensesChart() {
         // backgroundColor: "transparent",
         marginBottom: "50px",
         animation: "fadeIn 1s ease-in-out, pulse 2s infinite alternate", // Added animations
-        backgroundColor: "rgb(0,0,0,0.5",
+        // backgroundColor: "rgb(0,0,0,0.7)",
+        backgroundColor: "#2c3e50",
         color: "white",
       }}
     >
