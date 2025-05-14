@@ -1,107 +1,229 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Navbar.css"; // Add custom CSS for extra styling
-import { Menu } from "@mui/icons-material";
+import "./Navbar.css";
 import axios from "axios";
 import { useAuth } from "../Auth/AuthContext";
-const Navbar = ({ toggleSidebar }) => {
+
+const Navbar = () => {
   const { user, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+  const navigate = useNavigate();
+
   const getSerachProject = async (searchQuery) => {
     return await axios.get(
       `${import.meta.env.VITE_BACKEND_BASE_URL}/projects?search=${searchQuery}`
     );
   };
-  const navigate = useNavigate();
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery) {
-      console.log("Searching for:", searchQuery);
       getSerachProject(searchQuery)
         .then((project) => {
-          console.log(project.data);
           navigate(`/projects/detail/${project.data[0].id}`);
         })
-        .catch((err) =>
-          console.log(`  err in fetchong project ${searchQuery} `)
-        );
+        .catch((err) => console.log(`err in fetching project ${searchQuery}`));
     }
   };
 
-  return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-primary sticky-top shadow-sm ultra-navbar">
-      {/* <div>
-        <img src="/logo_transparent.png" alt="logo" width={100} height={100} />
-      </div> */}
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setIsVisible(false);
+      } else {
+        // Scrolling up
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
+
+  return (
+    <nav
+      className={`navbar navbar-expand-lg navbar-dark bg-primary shadow-sm ${
+        isVisible ? "navbar--visible" : "navbar--hidden"
+      }`}
+    >
       <div className="container-fluid">
-        <button className="btn btn-outline-light" onClick={toggleSidebar}>
-          <Menu />
-        </button>
-        {/* <Link to="/" className="navbar-brand fw-bold ultra-brand">
-          PMS
-        </Link> */}
+        <Link to="/" className="navbar-brand">
+          DashBoard
+        </Link>
+
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded={!isNavCollapsed ? true : false}
           aria-label="Toggle navigation"
+          onClick={handleNavCollapse}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div
+          className={`${isNavCollapsed ? "collapse" : ""} navbar-collapse`}
+          id="navbarContent"
+        >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 navbar-links">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">
-                {/* <img
-                  src="/logo_transparent.png"
-                  alt="logo"
-                  width={150}
-                  height={80}
-                /> */}
-                DashBoard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/projects" className="nav-link ultra-link">
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle d-flex align-items-center gap-1"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Projects
-              </Link>
+                <i className="bi bi-chevron-down"></i>
+              </a>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link className="dropdown-item" to="/projects">
+                    View All Projects
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/projects/add">
+                    Add Project
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/projects/timeline">
+                    Project Timeline
+                  </Link>
+                </li>
+              </ul>
             </li>
-            <li className="nav-item">
-              <Link to="/tasks" className="nav-link ultra-link">
+
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle d-flex align-items-center gap-1"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Tasks
-              </Link>
+                <i className="bi bi-chevron-down"></i>
+              </a>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link className="dropdown-item" to="/tasks">
+                    View All Tasks
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/tasks/add">
+                    Add Task
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/tasks/calendar">
+                    Task Calendar
+                  </Link>
+                </li>
+              </ul>
             </li>
-            <li className="nav-item">
-              <Link to="/employees" className="nav-link ultra-link">
+
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle d-flex align-items-center gap-1"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Employees
-              </Link>
+                <i className="bi bi-chevron-down"></i>
+              </a>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link className="dropdown-item" to="/employees">
+                    View All Employees
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/employees/add">
+                    Add Employee
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/employees/schedule">
+                    Employee Schedule
+                  </Link>
+                </li>
+              </ul>
             </li>
+
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle d-flex align-items-center gap-1"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Resources
+                <i className="bi bi-chevron-down"></i>
+              </a>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link className="dropdown-item" to="/expenses">
+                    Expenses
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/inventory">
+                    Inventory
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/suppliers">
+                    Suppliers
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/ProjectResources">
+                    Project Resources
+                  </Link>
+                </li>
+              </ul>
+            </li>
+
             <li className="nav-item">
-              <Link to="/expenses" className="nav-link ultra-link">
-                Expenses
-              </Link>
+              <form className="d-flex" onSubmit={handleSearch}>
+                <input
+                  className="form-control me-2 rounded-pill"
+                  type="search"
+                  placeholder="Search project...."
+                  aria-label="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button className="btn btn-light rounded-pill" type="submit">
+                  <i className="bi bi-search"></i>
+                </button>
+              </form>
             </li>
-            <li className="nav-item">
-              <Link to="/inventory" className="nav-link ultra-link">
-                Inventory
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/suppliers" className="nav-link ultra-link">
-                Suppliers
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/ProjectResources" className="nav-link ultra-link">
-                Project Resources
-              </Link>
-            </li>
+
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -162,21 +284,6 @@ const Navbar = ({ toggleSidebar }) => {
               )}
             </li>
           </ul>
-
-          {/* Search Bar */}
-          <form className="d-flex" onSubmit={handleSearch}>
-            <input
-              className="form-control me-2 rounded-pill"
-              type="search"
-              placeholder="Search project...."
-              aria-label="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="btn btn-light rounded-pill" type="submit">
-              <i className="bi bi-search"></i>
-            </button>
-          </form>
         </div>
       </div>
     </nav>

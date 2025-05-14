@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Navigate, Link } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,7 +20,6 @@ import InventoryPage from "./pages/InventoryPage";
 import SupplierPage from "./pages/SupplierPage";
 import ProjectResourcesPage from "./pages/ProjectResourcesPage";
 import Navbar from "./components/Layout/Navbar";
-import Sidebar from "./components/Layout/Sidebar";
 import Footer from "./components/Layout/Footer"; // Import Footer component
 import ProjectForm from "./components/Projects/ProjectForm";
 import ProjectUpdate from "./components/Projects/ProjectUpdate";
@@ -46,13 +45,9 @@ import Signup from "./pages/Signup";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import { useAuth } from "./components/Auth/AuthContext";
 import ChangePassword from "./components/Auth/ChangePassword";
-function App() {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const { user } = useAuth();
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
+function App() {
+  const { user } = useAuth();
 
   // Add a simple authentication layout for non-logged in users
   const AuthLayout = () => (
@@ -95,12 +90,10 @@ function App() {
 
   return (
     <div className="App">
-      {user && <Navbar toggleSidebar={toggleSidebar} />}
+      {user && <Navbar />}
       <div className="container-fluid">
         <div className="row">
-          {user && <Sidebar isOpen={isSidebarOpen} />}
-
-          <div className={user ? "col-md-9 col-12" : "col-12"}>
+          <div className="col-12">
             <div className="content">
               <Routes>
                 {/* Public routes */}

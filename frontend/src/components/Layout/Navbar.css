@@ -5,17 +5,30 @@ html {
   padding: 0;
 }
 
+/* Add padding to body to prevent content from hiding under navbar */
+body {
+  padding-top: 80px; /* Adjust this value based on your navbar height */
+}
+
 /* Full-width Navbar */
 .navbar {
-  background: linear-gradient(90deg, #1e2a38, #354f6b);
-  width: 100%;
   background: linear-gradient(90deg, #007bff, #0056b3);
   padding: 15px 0;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  animation: navbarFadeIn 1.2s ease-out;
-  position: sticky;
-  top: 0;
   z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Add these new classes for showing/hiding navbar */
+.navbar--hidden {
+  transform: translateY(-100%);
+}
+
+.navbar--visible {
+  transform: translateY(0);
 }
 
 /* Ensures navbar container stretches fully */
@@ -31,6 +44,8 @@ html {
 .navbar-links {
   list-style: none;
   display: flex;
+  align-items: center;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -48,8 +63,14 @@ html {
   transition: all 0.3s ease;
 }
 
-/* Underline hover effect */
+/* Remove or modify the existing underline hover effect */
 .nav-link::after {
+  display: none; /* This will hide the yellow line for all nav-links */
+}
+
+/* If you want to keep the underline effect only for specific items, 
+   you can create a new class */
+.nav-link.underline-hover::after {
   content: "";
   position: absolute;
   width: 0;
@@ -60,7 +81,7 @@ html {
   transition: width 0.3s ease-in-out;
 }
 
-.nav-link:hover::after {
+.nav-link.underline-hover:hover::after {
   width: 100%;
 }
 
@@ -98,16 +119,167 @@ html {
   color: #007bff;
 }
 
+/* Dropdown Menu */
+.dropdown-menu {
+  background-color: var(--bs-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: none; /* Let Bootstrap handle the display */
+}
+
+.dropdown-menu.show {
+  display: block;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  color: white;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Dropdown icon styling */
+.nav-link.dropdown-toggle .bi-chevron-down {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.nav-link.dropdown-toggle[aria-expanded="true"] .bi-chevron-down {
+  transform: rotate(180deg);
+}
+
+/* Add gap between text and icon */
+.nav-link.dropdown-toggle {
+  gap: 4px;
+}
+
+/* Add these styles for profile dropdown positioning */
+.navbar-nav .nav-item:last-child .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .navbar-links {
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown-menu {
+    position: static !important;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+
+  .navbar-search {
+    width: 100%;
+    margin: 10px 0;
   }
 
   .navbar-link {
     font-size: 16px;
     text-align: center;
+  }
+
+  .navbar-nav {
+    padding: 1rem;
+  }
+
+  .form-control {
+    width: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-nav {
+    gap: 0.5rem;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem;
+    position: static !important;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+  }
+
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    color: white;
+  }
+
+  .navbar-nav .form-control {
+    width: calc(100% - 50px);
+  }
+
+  .navbar-toggler {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.25rem 0.5rem;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  /* Adjust search form for mobile */
+  .nav-item form.d-flex {
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .nav-item form.d-flex .form-control {
+    width: 100%;
+  }
+
+  /* Adjust dropdown positioning */
+  .dropdown-menu-end {
+    right: auto;
+    left: 0;
+  }
+
+  /* Reset dropdown position for mobile view */
+  .navbar-nav .nav-item:last-child .dropdown-menu {
+    left: 0;
+    right: auto;
+    width: 100%;
   }
 }
