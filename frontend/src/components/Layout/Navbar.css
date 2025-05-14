@@ -1,315 +1,145 @@
-/* Reset body styles */
+/* Reset and base styles - Remove background from html/body */
 body,
 html {
   margin: 0;
   padding: 0;
-  background: #fff;
-  min-height: 100vh;
 }
 
-/* Remove body padding */
-body {
-  padding-top: 60px; /* Match exact navbar height */
+/* Add these styles at the top after body, html reset */
+.content-wrapper {
+  padding-top: 80px; /* Slightly more than navbar height to add some breathing room */
+  min-height: calc(100vh - 64px);
 }
 
-/* Full-width Navbar */
+/* Professional Navbar Styling */
 .navbar {
-  background: linear-gradient(90deg, #007bff, #0056b3);
-  height: 60px; /* Fixed height */
-  padding: 0; /* Remove padding */
-  box-shadow: none; /* Remove shadow */
-  z-index: 1000;
+  background: linear-gradient(
+    90deg,
+    #007bff,
+    #0056b3
+  ) !important; /* Force gradient with !important */
+  height: 64px;
+  padding: 0 1.5rem;
   position: fixed;
   width: 100%;
   top: 0;
-  transition: transform 0.3s ease-in-out;
-  border: none; /* Remove border */
+  z-index: 1000;
+  border: none;
 }
 
-/* Add these new classes for showing/hiding navbar */
-.navbar--hidden {
-  transform: translateY(-100%);
+/* Brand/Logo styling */
+.navbar-brand {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0.5rem 0;
 }
 
-.navbar--visible {
-  transform: translateY(0);
+.navbar-brand:hover {
+  color: rgba(255, 255, 255, 0.9);
 }
 
-/* Ensures navbar container stretches fully */
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Reset list styling */
-.navbar-links {
-  list-style: none;
+/* Navigation items */
+.navbar-nav {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  justify-content: space-around; /* Links spaced evenly */
+  gap: 0.5rem;
 }
 
-/* Links styling */
-.nav-link {
-  text-decoration: none;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 400;
-  text-transform: uppercase;
+.nav-item {
   position: relative;
-  transition: all 0.3s ease;
 }
 
-/* Remove or modify the existing underline hover effect */
-.nav-link::after {
-  display: none; /* This will hide the yellow line for all nav-links */
-}
-
-/* If you want to keep the underline effect only for specific items, 
-   you can create a new class */
-.nav-link.underline-hover::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -5px;
-  left: 0;
-  background-color: #ffcc29;
-  transition: width 0.3s ease-in-out;
-}
-
-.nav-link.underline-hover:hover::after {
-  width: 100%;
+.nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
 }
 
 .nav-link:hover {
-  color: #ffffff;
-  background: #0056b3 !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
-  transform: translateY(-3px) !important;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  transform: none;
+  box-shadow: none;
 }
 
-/* Special Link Styling */
-.special-link {
-  color: #ff6f61;
-  font-weight: bold;
+/* Add these styles for dropdown toggle icons */
+.nav-link.dropdown-toggle::after {
+  display: none; /* Hide default bootstrap arrow */
 }
 
-.special-link:hover {
-  color: #ffcc29;
-  transform: rotate(-2deg) scale(1.1);
-  transition: transform 0.4s ease, color 0.3s ease;
-}
-
-/* Dropdown icon styling */
 .nav-link.dropdown-toggle .bi-chevron-down {
+  margin-left: 4px;
   font-size: 12px;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
+/* Rotate icon when dropdown is open */
 .nav-link.dropdown-toggle[aria-expanded="true"] .bi-chevron-down {
   transform: rotate(180deg);
 }
 
-/* Add gap between text and icon */
-.nav-link.dropdown-toggle {
-  gap: 4px;
-}
-
-/* Search Bar */
-.navbar-search input {
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  padding: 5px 15px;
-}
-
-.navbar-search button {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 5px 15px;
-  color: #007bff;
-}
-
-/* Update dropdown menu styles */
+/* Dropdown styling */
 .dropdown-menu {
-  margin-top: 0; /* Remove margin */
+  background: #fff;
   border: none;
-  border-radius: 0;
-  background: linear-gradient(90deg, #007bff, #0056b3);
-  padding: 0;
-}
-
-.dropdown-menu.show {
-  display: block;
-  animation: fadeIn 0.2s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  padding: 0.5rem 0;
+  min-width: 200px;
 }
 
 .dropdown-item {
+  color: #2c3e50;
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
-  color: white;
-  padding: 8px 16px;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+/* Update dropdown item icons animation */
+.dropdown-item i {
+  color: #6c757d;
+  font-size: 1rem;
   transition: all 0.3s ease;
 }
 
-.dropdown-item i {
-  transition: transform 0.3s ease;
-}
-
+/* Remove existing hover transform on icons if any */
 .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: #f8f9fa;
+  color: #2c3e50;
 }
 
 .dropdown-item:hover i {
-  transform: scale(1.2);
+  color: #2c3e50;
+  transform: translateX(3px);
 }
 
-/* Specific icon animations */
-.dropdown-item:hover .bi-kanban {
-  transform: translateX(3px) scale(1.1);
-}
-
-.dropdown-item:hover .bi-plus-circle,
-.dropdown-item:hover .bi-plus-square {
-  transform: rotate(90deg) scale(1.1);
-}
-
-.dropdown-item:hover .bi-calendar-range,
-.dropdown-item:hover .bi-calendar-check,
-.dropdown-item:hover .bi-calendar-week {
-  transform: translateY(-2px) scale(1.1);
-}
-
-.dropdown-item:hover .bi-people {
-  transform: scale(1.2);
-}
-
-.dropdown-item:hover .bi-person-plus {
-  transform: translateX(2px) scale(1.1);
-}
-
-.dropdown-item:hover .bi-cash-coin {
-  transform: translateX(-2px) scale(1.1);
-}
-
-.dropdown-item:hover .bi-box-seam {
-  transform: translateY(-2px) rotate(-5deg) scale(1.1);
-}
-
-.dropdown-item:hover .bi-truck {
-  transform: translateX(3px) scale(1.1);
-}
-
-.dropdown-item:hover .bi-gear {
-  transform: rotate(90deg) scale(1.1);
-}
-
-/* Profile dropdown specific styles */
-.dropdown-item:hover .bi-person {
-  transform: scale(1.2);
-}
-
-.dropdown-item:hover .bi-key {
-  transform: rotate(-15deg) scale(1.1);
-}
-
-.dropdown-item:hover .bi-box-arrow-right {
-  transform: translateX(3px) scale(1.1);
-}
-
-.dropdown-item:hover .bi-box-arrow-in-right {
-  transform: translateX(3px) scale(1.1);
-}
-
-.dropdown-item:hover .bi-person-plus {
-  transform: scale(1.2) rotate(15deg);
-}
-
-/* Add smooth transition for all icons */
-.dropdown-item i {
-  transition: all 0.3s ease;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .dropdown-item {
-    padding: 10px 16px;
-  }
-
-  .dropdown-item i {
-    font-size: 1.1em;
-  }
-}
-
-.navbar-collapse {
-  background: linear-gradient(90deg, #007bff, #0056b3);
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Add these styles for profile dropdown positioning */
-.navbar-nav .nav-item:last-child .dropdown-menu {
-  left: auto;
-  right: 0;
-}
-
-/* YouTube-like Search Styling */
+/* Search bar styling */
 .search-container {
-  display: flex;
-  align-items: center;
-  max-width: 400px;
-  width: 100%;
-  margin: 0 10px;
-}
-
-.search-form {
-  width: 100%;
+  max-width: 300px;
+  margin: 0 1rem;
 }
 
 .search-input-wrapper {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.2s ease;
-  overflow: hidden;
-}
-
-.search-input-wrapper:focus-within {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .search-input {
-  flex: 1;
-  border: none;
-  padding: 8px 16px;
-  font-size: 15px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
   width: 100%;
 }
 
@@ -317,171 +147,74 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.search-input:focus {
-  outline: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* Clear button (x) styling */
-.search-input::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  height: 16px;
-  width: 16px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgba(255,255,255,0.8)'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E")
-    no-repeat 50% 50%;
-  cursor: pointer;
-}
-
 .search-button {
   background: transparent;
   border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 0.75rem;
 }
 
 .search-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
-.search-button i {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .navbar-links {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .nav-item {
-    width: 100%;
-    text-align: center;
-  }
-
-  .dropdown-menu {
-    position: static !important;
-    width: 100%;
-    margin: 0;
-    text-align: center;
-  }
-
-  .navbar-search {
-    width: 100%;
-    margin: 10px 0;
-  }
-
-  .navbar-link {
-    font-size: 16px;
-    text-align: center;
-  }
-
-  .navbar-nav {
+/* Mobile responsiveness */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
     padding: 1rem;
   }
 
-  .form-control {
-    width: 100%;
-  }
-
-  .search-container {
-    max-width: 100%;
-    margin: 8px 0;
-  }
-
-  .search-input-wrapper {
-    width: 100%;
-  }
-
-  .search-input {
-    font-size: 14px;
-  }
-
-  .search-button {
-    padding: 8px 15px;
-  }
-}
-
-@media (max-width: 991px) {
-  .navbar-collapse {
-    position: absolute;
-    top: 60px; /* Match navbar height */
-    left: 0;
-    right: 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-  }
-
-  body {
-    padding-top: 60px; /* Match navbar height */
-  }
-
-  .navbar-nav {
-    gap: 0.5rem;
-  }
-
-  .nav-item {
-    width: 100%;
-  }
-
   .dropdown-menu {
-    width: 100%;
-    margin: 0;
-    padding: 0.5rem;
-    position: static !important;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+    border-radius: 4px;
+    margin: 0.5rem 0;
   }
 
   .dropdown-item {
-    padding: 0.5rem 1rem;
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
 
-  .navbar-nav .form-control {
-    width: calc(100% - 50px);
+  .dropdown-item i {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .dropdown-item:hover i {
+    color: #fff;
+  }
+
+  .nav-link.dropdown-toggle .bi-chevron-down {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nav-link.dropdown-toggle[aria-expanded="true"] .bi-chevron-down {
+    transform: translateY(-50%) rotate(180deg);
   }
 
   .navbar-toggler {
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 0.25rem 0.5rem;
   }
 
   .navbar-toggler:focus {
-    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+    box-shadow: none;
   }
 
-  .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-  }
-
-  /* Adjust search form for mobile */
-  .nav-item form.d-flex {
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-
-  .nav-item form.d-flex .form-control {
-    width: 100%;
-  }
-
-  /* Adjust dropdown positioning */
-  .dropdown-menu-end {
-    right: auto;
-    left: 0;
-  }
-
-  /* Reset dropdown position for mobile view */
-  .navbar-nav .nav-item:last-child .dropdown-menu {
-    left: 0;
-    right: auto;
-    width: 100%;
+  .search-container {
+    max-width: 100%;
+    margin: 0.5rem 0;
   }
 }

@@ -91,107 +91,112 @@ function App() {
   return (
     <div className="App">
       {user && <Navbar />}
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12">
-            <div className="content">
-              <Routes>
-                {/* Public routes */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+      <main className="main-content">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <div className="content pt-4">
+                <Routes>
+                  {/* Public routes */}
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
 
-                {/* Show welcome page with login/signup options for root path */}
-                <Route
-                  path="/"
-                  element={user ? <DashboardPage /> : <AuthLayout />}
-                />
+                  {/* Show welcome page with login/signup options for root path */}
+                  <Route
+                    path="/"
+                    element={user ? <DashboardPage /> : <AuthLayout />}
+                  />
 
-                {/* Protected routes */}
-                <Route element={<ProtectedRoute />}>
-                  {/* ... change password ... */}
-                  <Route path="/change-password" element={<ChangePassword />} />
-                  {/* Projects */}
-                  <Route path="/projects" element={<ProjectPage />} />
-                  <Route path="/projects/new" element={<ProjectForm />} />
-                  <Route
-                    path="/projects/update/:id"
-                    element={<ProjectUpdate />}
-                  />
-                  <Route
-                    path="/projects/detail/:id"
-                    element={<ProjectDetails />}
-                  />
-                  {/* Tasks */}
-                  <Route path="/tasks" element={<TaskPage />} />
-                  <Route path="/tasks/new" element={<TaskForm />} />
-                  <Route path="/tasks/detail/:id" element={<TaskDetails />} />
-                  <Route path="/tasks/update/:id" element={<TaskUpdate />} />
-                  {/* Expenses */}
-                  <Route path="/expenses" element={<ExpensePage />} />
-                  <Route path="/expenses/new" element={<ExpenseForm />} />
-                  <Route
-                    path="/expenses/detail/:id"
-                    element={<ExpenseDetails />}
-                  />
-                  <Route
-                    path="/expenses/update/:id"
-                    element={<ExpenseUpdate />}
-                  />
-                  {/* Suppliers */}
-                  <Route path="/suppliers" element={<SupplierPage />} />
-                  <Route path="/suppliers/new" element={<SuppliersForm />} />
-                  <Route
-                    path="/suppliers/update/:id"
-                    element={<SuppliersUpdate />}
-                  />
-                  {/* <Route
+                  {/* Protected routes */}
+                  <Route element={<ProtectedRoute />}>
+                    {/* ... change password ... */}
+                    <Route
+                      path="/change-password"
+                      element={<ChangePassword />}
+                    />
+                    {/* Projects */}
+                    <Route path="/projects" element={<ProjectPage />} />
+                    <Route path="/projects/new" element={<ProjectForm />} />
+                    <Route
+                      path="/projects/update/:id"
+                      element={<ProjectUpdate />}
+                    />
+                    <Route
+                      path="/projects/detail/:id"
+                      element={<ProjectDetails />}
+                    />
+                    {/* Tasks */}
+                    <Route path="/tasks" element={<TaskPage />} />
+                    <Route path="/tasks/new" element={<TaskForm />} />
+                    <Route path="/tasks/detail/:id" element={<TaskDetails />} />
+                    <Route path="/tasks/update/:id" element={<TaskUpdate />} />
+                    {/* Expenses */}
+                    <Route path="/expenses" element={<ExpensePage />} />
+                    <Route path="/expenses/new" element={<ExpenseForm />} />
+                    <Route
+                      path="/expenses/detail/:id"
+                      element={<ExpenseDetails />}
+                    />
+                    <Route
+                      path="/expenses/update/:id"
+                      element={<ExpenseUpdate />}
+                    />
+                    {/* Suppliers */}
+                    <Route path="/suppliers" element={<SupplierPage />} />
+                    <Route path="/suppliers/new" element={<SuppliersForm />} />
+                    <Route
+                      path="/suppliers/update/:id"
+                      element={<SuppliersUpdate />}
+                    />
+                    {/* <Route
                   path="/suppliers/detail/:id"
                   element={<SuppliersDetail />}
                 /> */}
-                  {/* Inventory */}
-                  <Route path="/inventory" element={<InventoryPage />} />
-                  <Route path="/inventory/new" element={<InventoryForm />} />
-                  <Route
-                    path="/inventory/update/:id"
-                    element={<InventoryUpdate />}
-                  />
-                  <Route
-                    path="/inventory/detail/:id"
-                    element={<InventoryDetail />}
-                  />
-                  {/* Employees */}
-                  <Route path="/employees" element={<EmployeePage />} />
-                  <Route path="/employees/new" element={<EmployeeForm />} />
-                  <Route
-                    path="/employees/update/:id"
-                    element={<EmployeeUpdate />}
-                  />
-                  <Route
-                    path="/employees/detail/:id"
-                    element={<EmployeeDetail />}
-                  />
-                  {/* ProjectResources */}
-                  <Route
-                    path="/ProjectResources"
-                    element={<ProjectResourcesPage />}
-                  />
-                  <Route
-                    path="/ProjectResources/new"
-                    element={<ProjectResourcesForm />}
-                  />
-                  <Route
-                    path="/ProjectResources/update/:id"
-                    element={<ProjectResourcesUpdate />}
-                  />
-                </Route>
+                    {/* Inventory */}
+                    <Route path="/inventory" element={<InventoryPage />} />
+                    <Route path="/inventory/new" element={<InventoryForm />} />
+                    <Route
+                      path="/inventory/update/:id"
+                      element={<InventoryUpdate />}
+                    />
+                    <Route
+                      path="/inventory/detail/:id"
+                      element={<InventoryDetail />}
+                    />
+                    {/* Employees */}
+                    <Route path="/employees" element={<EmployeePage />} />
+                    <Route path="/employees/new" element={<EmployeeForm />} />
+                    <Route
+                      path="/employees/update/:id"
+                      element={<EmployeeUpdate />}
+                    />
+                    <Route
+                      path="/employees/detail/:id"
+                      element={<EmployeeDetail />}
+                    />
+                    {/* ProjectResources */}
+                    <Route
+                      path="/ProjectResources"
+                      element={<ProjectResourcesPage />}
+                    />
+                    <Route
+                      path="/ProjectResources/new"
+                      element={<ProjectResourcesForm />}
+                    />
+                    <Route
+                      path="/ProjectResources/update/:id"
+                      element={<ProjectResourcesUpdate />}
+                    />
+                  </Route>
 
-                {/* Redirect unauthorized routes to home */}
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
+                  {/* Redirect unauthorized routes to home */}
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
       {user && <Footer />}
     </div>
   );
