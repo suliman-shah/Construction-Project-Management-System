@@ -1,0 +1,33 @@
+/* Custom Tabs Styling */
+.nav-tabs {
+  --inactive-bg: #0d6efd; /* Blue for inactive tabs */
+  --inactive-color: white; /* White text for inactive */
+  --active-bg: white; /* White for active tab */
+  --active-color: black; /* Black text for active */
+  --border-color: #dee2e6; /* Light gray border */
+}
+/* Ensure the icon tab aligns properly */
+
+.custom-tabs .nav-tabs {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.custom-tabs .nav-link {
+  color: var(--inactive-color) !important;
+  background-color: var(--inactive-bg) !important;
+  border: 1px solid var(--inactive-bg) !important;
+  border-bottom-color: var(--border-color) !important;
+  margin-right: 4px;
+  transition: all 0.3s ease;
+}
+
+.custom-tabs .nav-link:hover {
+  background-color: #0b5ed7 !important; /* Slightly darker blue on hover */
+}
+
+.custom-tabs .nav-link.active {
+  color: var(--active-color) !important;
+  background-color: var(--active-bg) !important;
+  border-color: var(--border-color) var(--border-color) var(--active-bg) !important;
+  font-weight: bold;
+}

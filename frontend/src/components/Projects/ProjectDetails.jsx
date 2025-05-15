@@ -5,6 +5,7 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import RangeInputWithBubble from "./RangeInputWithBubble";
 import BudgetExpenseComparison from "./BudgetExpenseComparison";
+import { UploadFile } from "@mui/icons-material"; // Or any other icon library
 import {
   Container,
   Row,
@@ -32,7 +33,9 @@ import {
 } from "@mui/icons-material";
 
 import { deleteTask } from "../../services/taskService";
-
+// import "../../../components/Projects/ProjectDetail.css";
+// import "C:/Users/PMLS/Documents/CONSTRUCTION App/frontend/src/components/Projects/ProjectDetail.css";
+import "./ProjectDetail.css";
 function ProjectDetails() {
   const [searchParms] = useSearchParams();
   const { project_id } = Object.fromEntries([...searchParms]);
@@ -56,6 +59,8 @@ function ProjectDetails() {
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [rangeValue, setRangeValue] = useState(50); // Set initial range value
   const [filteredExpenses, setFilteredExpenses] = useState(expenses);
+  const [documents, setDocuments] = useState([]);
+  const [searchDoc, setSearchDoc] = useState("");
 
   useEffect(() => {
     // Fetch all necessary data concurrently
@@ -302,7 +307,7 @@ function ProjectDetails() {
       <Tabs
         defaultActiveKey="overview"
         id="project-details-tabs"
-        className="mb-3"
+        className="custom-tabs mb-3" // Added custom class
         fill
       >
         {/* Overview Tab */}
@@ -396,7 +401,7 @@ function ProjectDetails() {
               </form>
             </Col>
             <Col className="text-end">
-              <OverlayTrigger
+              {/* <OverlayTrigger
                 overlay={<Tooltip className="tooltip">Add New Task</Tooltip>}
               >
                 <Link
@@ -405,13 +410,13 @@ function ProjectDetails() {
                 >
                   <Add />
                 </Link>
-              </OverlayTrigger>
-              {/* <Link
+              </OverlayTrigger> */}
+              <Link
                 to={`/tasks/new?project_id=${id}`}
                 className="btn btn-primary"
               >
                 Add New Task
-              </Link> */}
+              </Link>
             </Col>
           </Row>
           {tasks.length === 0 ? (
@@ -811,7 +816,8 @@ function ProjectDetails() {
           )}
         </Tab>
         {/* Documents Tab (Optional) */}
-        <Tab eventKey="documents" title="Documents">
+
+        {/* <Tab eventKey="documents" title="Documents">
           <Row className="mb-3">
             <Col>
               <h5>Project Documents</h5>
@@ -821,12 +827,86 @@ function ProjectDetails() {
                 Upload Document
               </Button>
             </Col>
-          </Row>
-          {/* Implement document upload and management here  */}
-          <p style={{ color: "yellow" }}>
+          </Row> */}
+        {/* Implement document upload and management here  */}
+        {/* <p style={{ color: "yellow" }}>
             Feature to upload and manage project-related documents will be
             implemented here in upcoming updates.
-          </p>
+          </p> */}
+        {/* </Tab> */}
+
+        <Tab
+          eventKey="documents"
+          style={{ border: "none" }}
+          title={
+            <span>
+              <UploadFile fontSize="small" /> {/* Icon only */}
+            </span>
+          }
+        >
+          <Row className="mb-3">
+            <Col>
+              <h5>Project Documents</h5>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <form className="d-flex" role="search">
+                <div className="input-group enhanced-search-bar">
+                  <span
+                    className="input-group-text search-icon"
+                    id="search-addon"
+                  >
+                    <i className="bi bi-search"></i>
+                  </span>
+                  <input
+                    type="search"
+                    className="form-control search-input"
+                    placeholder="Search documents..."
+                    aria-label="Search"
+                    // onChange={(e) => setSearchDoc(e.target.value)} // Add state for search
+                  />
+                </div>
+              </form>
+            </Col>
+            <Col className="text-end">
+              <Button variant="primary" onClick={handleUploadDocument}>
+                Upload Document
+              </Button>
+            </Col>
+          </Row>
+
+          {documents.length === 0 ? ( // Add state for documents
+            <p style={{ color: "yellow" }}>No documents uploaded yet.</p>
+          ) : (
+            <Table bordered hover responsive className="table-custom">
+              <thead className="table-light">
+                <tr>
+                  <th>Document Name</th>
+                  <th>Type</th>
+                  <th>Upload Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {documents.map((doc) => (
+                  <tr key={doc.id}>
+                    <td>{doc.name}</td>
+                    <td>{doc.type}</td>
+                    <td>{doc.uploadDate}</td>
+                    <td>
+                      <Button variant="info" size="sm">
+                        <Visibility />
+                      </Button>
+                      <Button variant="danger" size="sm" className="ms-2">
+                        <Delete />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
         </Tab>
       </Tabs>
 

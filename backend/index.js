@@ -299,6 +299,237 @@ app.use((req, res, next) => {
 // app.get("/", (req, res) => {
 //   res.send("Welcome to CPMS");
 // });
+/*=========================================================================================================================================================
+===========================================================================================================================================================
+==============================================    CRUD Routes for Documents   =============================================================================
+===========================================================================================================================================================
+===========================================================================================================================================================
+*/
+
+// Configure multer for file uploads
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+// Set up storage configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = "uploads/";
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 100 * 1024 * 1024 }, // 100MB limit
+});
+
+function formatFileSize(bytes) {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
+
+//______________________________________________ Upload Document ______//
+app.post(
+  "/projects/:projectId/documents",
+  isAuthenticated,
+  upload.single("file"),
+  async (req, res) => {
+    const { projectId } = req.params;
+    const { description } = req.body;
+    const file = req.file;
+    const userId = req.user.id;
+
+    if (!file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    try {
+      const q = `INSERT INTO documents 
+               (project_id, name, file_type, file_extension, file_path, file_size, uploaded_by, description)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+      const fileExt = path.extname(file.originalname).slice(1).toLowerCase();
+
+      db.query(
+        q,
+        [
+          projectId,
+          file.originalname,
+          file.mimetype,
+          fileExt,
+          file.path,
+          file.size,
+          userId,
+          description || null,
+        ],
+        (err, result) => {
+          if (err) {
+            console.error("Error saving document:", err);
+            // Clean up the uploaded file if DB operation fails
+            fs.unlinkSync(file.path);
+            return res.status(500).json({ error: "Failed to save document" });
+          }
+
+          res.status(201).json({
+            message: "Document uploaded successfully",
+            documentId: result.insertId,
+          });
+        }
+      );
+    } catch (error) {
+      console.error("Error in document upload:", error);
+      if (file && file.path) {
+        fs.unlinkSync(file.path); // Clean up file on error
+      }
+      res.status(500).json({ error: "Server error during document upload" });
+    }
+  }
+);
+
+//______________________________________________ Get All Documents for Project ______//
+app.get("/projects/:projectId/documents", isAuthenticated, (req, res) => {
+  const { projectId } = req.params;
+
+  const q = `SELECT id, name, file_type, file_size, upload_date, description 
+             FROM documents 
+             WHERE project_id = ? 
+             ORDER BY upload_date DESC`;
+
+  db.query(q, [projectId], (err, results) => {
+    if (err) {
+      console.error("Error fetching documents:", err);
+      return res.status(500).json({ error: "Failed to fetch documents" });
+    }
+
+    // Format dates and file sizes for better readability
+    const formattedResults = results.map((doc) => ({
+      ...doc,
+      upload_date: new Date(doc.upload_date).toISOString(),
+      file_size: formatFileSize(doc.file_size),
+    }));
+
+    res.json(formattedResults);
+  });
+});
+
+//______________________________________________ Download Document ______//
+app.get("/documents/:id/download", isAuthenticated, (req, res) => {
+  const { id } = req.params;
+
+  const q = `SELECT name, file_path, file_type FROM documents WHERE id = ?`;
+
+  db.query(q, [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching document:", err);
+      return res.status(500).json({ error: "Failed to fetch document" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Document not found" });
+    }
+
+    const document = results[0];
+    const filePath = path.resolve(document.file_path);
+
+    // Check if file exists
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: "File not found on server" });
+    }
+
+    // Set appropriate headers
+    res.setHeader("Content-Type", document.file_type);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${document.name}"`
+    );
+
+    // Create read stream and pipe to response
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
+
+    // Handle stream errors
+    fileStream.on("error", (err) => {
+      console.error("File stream error:", err);
+      res.status(500).json({ error: "Error streaming file" });
+    });
+  });
+});
+
+//______________________________________________ Delete Document ______//
+app.delete("/documents/:id", isAuthenticated, (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+
+  // First get the document details
+  const getQuery = `SELECT file_path, uploaded_by FROM documents WHERE id = ?`;
+
+  db.query(getQuery, [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching document:", err);
+      return res.status(500).json({ error: "Failed to fetch document" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Document not found" });
+    }
+
+    const document = results[0];
+
+    // Check if the current user is the uploader or has admin rights
+    if (document.uploaded_by !== userId) {
+      return res
+        .status(403)
+        .json({ error: "You can only delete your own documents" });
+    }
+
+    // Delete the file from filesystem
+    if (document.file_path && fs.existsSync(document.file_path)) {
+      fs.unlink(document.file_path, (err) => {
+        if (err) {
+          console.error("Error deleting file:", err);
+          return res.status(500).json({ error: "Failed to delete file" });
+        }
+
+        // File deleted successfully, now delete the DB record
+        deleteDocumentRecord(id, res);
+      });
+    } else {
+      // No file to delete, just delete the record
+      deleteDocumentRecord(id, res);
+    }
+  });
+});
+
+// Helper function to delete document record
+function deleteDocumentRecord(id, res) {
+  const deleteQuery = `DELETE FROM documents WHERE id = ?`;
+
+  db.query(deleteQuery, [id], (err, result) => {
+    if (err) {
+      console.error("Error deleting document record:", err);
+      return res
+        .status(500)
+        .json({ error: "Failed to delete document record" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Document not found" });
+    }
+
+    res.json({ message: "Document deleted successfully" });
+  });
+}
 
 /*=========================================================================================================================================================
 ===========================================================================================================================================================
