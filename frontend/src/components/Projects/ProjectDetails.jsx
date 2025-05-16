@@ -6,6 +6,8 @@ import axios from "axios";
 import RangeInputWithBubble from "./RangeInputWithBubble";
 import BudgetExpenseComparison from "./BudgetExpenseComparison";
 import { UploadFile } from "@mui/icons-material"; // Or any other icon library
+import DocumentsList from "../DocumentUploadModal/DocumentsList";
+
 import {
   Container,
   Row,
@@ -36,6 +38,7 @@ import { deleteTask } from "../../services/taskService";
 // import "../../../components/Projects/ProjectDetail.css";
 // import "C:/Users/PMLS/Documents/CONSTRUCTION App/frontend/src/components/Projects/ProjectDetail.css";
 import "./ProjectDetail.css";
+import DocumentUploadModal from "../DocumentUploadModal/DocumentUploadModal";
 function ProjectDetails() {
   const [searchParms] = useSearchParams();
   const { project_id } = Object.fromEntries([...searchParms]);
@@ -61,6 +64,17 @@ function ProjectDetails() {
   const [filteredExpenses, setFilteredExpenses] = useState(expenses);
   const [documents, setDocuments] = useState([]);
   const [searchDoc, setSearchDoc] = useState("");
+  // In your ProjectDetails.jsx component
+  const [showUploadModal, setShowUploadModal] = useState(false);
+
+  const handleShowUploadModal = () => setShowUploadModal(true);
+  const handleCloseUploadModal = () => setShowUploadModal(false);
+
+  const handleDocumentUploadSuccess = () => {
+    // Refresh documents list after successful upload
+    // You'll need to implement this function to refetch documents
+    handleCloseUploadModal();
+  };
 
   useEffect(() => {
     // Fetch all necessary data concurrently
@@ -817,38 +831,11 @@ function ProjectDetails() {
         </Tab>
         {/* Documents Tab (Optional) */}
 
-        {/* <Tab eventKey="documents" title="Documents">
-          <Row className="mb-3">
-            <Col>
-              <h5>Project Documents</h5>
-            </Col>
-            <Col className="text-end">
-              <Button variant="primary" onClick={handleUploadDocument}>
-                Upload Document
-              </Button>
-            </Col>
-          </Row> */}
-        {/* Implement document upload and management here  */}
-        {/* <p style={{ color: "yellow" }}>
-            Feature to upload and manage project-related documents will be
-            implemented here in upcoming updates.
-          </p> */}
-        {/* </Tab> */}
-
         <Tab
           eventKey="documents"
-          style={{ border: "none" }}
-          title={
-            <span>
-              <UploadFile fontSize="small" /> {/* Icon only */}
-            </span>
-          }
+          title={<UploadFile style={{ fontSize: "1.2rem" }} />}
+          className="documents-tab"
         >
-          <Row className="mb-3">
-            <Col>
-              <h5>Project Documents</h5>
-            </Col>
-          </Row>
           <Row className="mb-3">
             <Col>
               <form className="d-flex" role="search">
@@ -864,50 +851,103 @@ function ProjectDetails() {
                     className="form-control search-input"
                     placeholder="Search documents..."
                     aria-label="Search"
-                    // onChange={(e) => setSearchDoc(e.target.value)} // Add state for search
+                    onChange={(e) => setSearchDoc(e.target.value)}
+                    value={searchDoc}
                   />
                 </div>
               </form>
             </Col>
             <Col className="text-end">
-              <Button variant="primary" onClick={handleUploadDocument}>
+              <Button variant="primary" onClick={handleShowUploadModal}>
                 Upload Document
               </Button>
             </Col>
           </Row>
 
-          {documents.length === 0 ? ( // Add state for documents
-            <p style={{ color: "yellow" }}>No documents uploaded yet.</p>
-          ) : (
-            <Table bordered hover responsive className="table-custom">
-              <thead className="table-light">
-                <tr>
-                  <th>Document Name</th>
-                  <th>Type</th>
-                  <th>Upload Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {documents.map((doc) => (
-                  <tr key={doc.id}>
-                    <td>{doc.name}</td>
-                    <td>{doc.type}</td>
-                    <td>{doc.uploadDate}</td>
-                    <td>
-                      <Button variant="info" size="sm">
-                        <Visibility />
-                      </Button>
-                      <Button variant="danger" size="sm" className="ms-2">
-                        <Delete />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
+          <DocumentsList projectId={id} searchTerm={searchDoc} />
+
+          <DocumentUploadModal
+            show={showUploadModal}
+            handleClose={handleCloseUploadModal}
+            projectId={id}
+            refreshDocuments={handleDocumentUploadSuccess}
+          />
         </Tab>
+
+        {/* <Tab eventKey="documents" title="Documents"> */}
+        {/* <Row className="mb-3">
+            <Col>
+              <form className="d-flex" role="search">
+                <div className="input-group enhanced-search-bar">
+                  <span
+                    className="input-group-text search-icon"
+                    id="search-addon"
+                  >
+                    <i className="bi bi-search"></i>
+                  </span>
+                  <input
+                    type="search"
+                    className="form-control search-input"
+                    placeholder="Search documents..."
+                    aria-label="Search"
+                    onChange={(e) => setSearchDoc(e.target.value)}
+                    value={searchDoc}
+                  />
+                </div>
+              </form>
+            </Col>
+            <Col className="text-end">
+              <Button variant="primary" onClick={handleShowUploadModal}>
+                Upload Document
+              </Button>
+            </Col>
+          </Row> */}
+
+        {/* <DocumentsList projectId={id} searchTerm={searchDoc} /> */}
+
+        {/* Add the modal component */}
+
+        {/* <DocumentUploadModal
+            show={showUploadModal}
+            handleClose={handleCloseUploadModal}
+            projectId={id}
+            refreshDocuments={handleDocumentUploadSuccess}
+          /> */}
+        {/* </Tab> */}
+        {/* <Tab eventKey="documents" title="Documents">
+          <Row className="mb-3">
+            <Col>
+              <form className="d-flex" role="search">
+                <div className="input-group enhanced-search-bar">
+                  <span
+                    className="input-group-text search-icon"
+                    id="search-addon"
+                  >
+                    <i className="bi bi-search"></i>
+                  </span>
+                  <input
+                    type="search"
+                    className="form-control search-input"
+                    placeholder="Search documents..."
+                    aria-label="Search"
+                    onChange={(e) => setSearchDoc(e.target.value)}
+                    value={searchDoc}
+                  />
+                </div>
+              </form>
+            </Col>
+            <Col className="text-end">
+              <Link
+                to={`/documents/upload?project_id=${id}`}
+                className="btn btn-primary"
+              >
+                Upload Document
+              </Link>
+            </Col>
+          </Row>
+
+          <DocumentsList projectId={id} searchTerm={searchDoc} />
+        </Tab> */}
       </Tabs>
 
       {/* Delete Expense Confirmation Modal */}

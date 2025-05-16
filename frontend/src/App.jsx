@@ -46,6 +46,7 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import { useAuth } from "./components/Auth/AuthContext";
 import ChangePassword from "./components/Auth/ChangePassword";
 import AuthLayout from "./components/Auth/AuthLayout";
+import DocumentUploadModal from "./components/DocumentUploadModal/DocumentUploadModal";
 
 function App() {
   const { user } = useAuth();
@@ -77,6 +78,7 @@ function App() {
                       element={<ChangePassword />}
                     />
                     {/* Projects */}
+
                     <Route path="/projects" element={<ProjectPage />} />
                     <Route path="/projects/new" element={<ProjectForm />} />
                     <Route

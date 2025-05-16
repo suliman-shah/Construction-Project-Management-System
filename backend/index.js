@@ -405,6 +405,7 @@ app.get("/projects/:projectId/documents", isAuthenticated, (req, res) => {
              FROM documents 
              WHERE project_id = ? 
              ORDER BY upload_date DESC`;
+  console.log("Fetching documents for project:", projectId);
 
   db.query(q, [projectId], (err, results) => {
     if (err) {

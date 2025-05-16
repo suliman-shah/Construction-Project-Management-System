@@ -6,7 +6,6 @@
   --active-color: black; /* Black text for active */
   --border-color: #dee2e6; /* Light gray border */
 }
-/* Ensure the icon tab aligns properly */
 
 .custom-tabs .nav-tabs {
   border-bottom: 1px solid var(--border-color);
@@ -19,10 +18,12 @@
   border-bottom-color: var(--border-color) !important;
   margin-right: 4px;
   transition: all 0.3s ease;
+  padding: 0.25rem 0.75rem; /* Reduced padding to make tabs smaller */
+  font-size: 0.875rem; /* Slightly smaller font */
 }
 
 .custom-tabs .nav-link:hover {
-  background-color: #0b5ed7 !important; /* Slightly darker blue on hover */
+  background-color: #0b5ed7 !important;
 }
 
 .custom-tabs .nav-link.active {
@@ -30,4 +31,37 @@
   background-color: var(--active-bg) !important;
   border-color: var(--border-color) var(--border-color) var(--active-bg) !important;
   font-weight: bold;
+}
+
+/* Special styling for Documents tab */
+.custom-tabs .nav-link.documents-tab {
+  padding: 0.25rem; /* Minimal padding */
+  width: 36px; /* Fixed width for circle */
+  height: 36px; /* Fixed height for circle */
+  border-radius: 50% !important; /* Make it circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure the icon in documents tab is properly centered */
+.custom-tabs .nav-link.documents-tab i {
+  margin: 0;
+  font-size: 1rem; /* Adjust icon size as needed */
+}
+
+/* Special styling for Documents tab */
+.custom-tabs .nav-link.documents-tab {
+  padding: 0.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-tabs .nav-link.documents-tab i {
+  margin: 0;
+  font-size: 1rem;
 }
