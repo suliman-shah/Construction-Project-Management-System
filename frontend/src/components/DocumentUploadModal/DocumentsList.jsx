@@ -246,6 +246,7 @@ const DocumentsList = ({ projectId, searchTerm }) => {
       setLoading(true);
       const response = await getProjectDocuments(projectId);
       // Filter documents based on search term if provided
+      console.log("doc", response);
       const filteredDocs = searchTerm
         ? response.data.filter(
             (doc) =>
@@ -327,7 +328,7 @@ const DocumentsList = ({ projectId, searchTerm }) => {
   if (error) {
     return <Alert variant="danger">{error}</Alert>;
   }
-
+  console.log("documents", documents);
   return (
     <div className="documents-list-container">
       <Table bordered hover responsive className="documents-table">

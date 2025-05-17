@@ -342,13 +342,14 @@ function formatFileSize(bytes) {
 //______________________________________________ Upload Document ______//
 app.post(
   "/projects/:projectId/documents",
-  isAuthenticated,
+  isAuthenticated, // This middleware ensures user is logged in
   upload.single("file"),
   async (req, res) => {
     const { projectId } = req.params;
     const { description } = req.body;
     const file = req.file;
     const userId = req.user.id;
+    console.log("user is", userId); // From the authenticated session
 
     if (!file) {
       return res.status(400).json({ error: "No file uploaded" });
@@ -356,7 +357,7 @@ app.post(
 
     try {
       const q = `INSERT INTO documents 
-               (project_id, name, file_type, file_extension, file_path, file_size, uploaded_by, description)
+               (project_id,  uploaded_by,  name, file_type, file_extension, file_path, file_size,  description)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
       const fileExt = path.extname(file.originalname).slice(1).toLowerCase();
@@ -365,12 +366,12 @@ app.post(
         q,
         [
           projectId,
+          userId, // Added user_id here Will always have a value since route is protected by isAuthenticated
           file.originalname,
           file.mimetype,
           fileExt,
           file.path,
           file.size,
-          userId,
           description || null,
         ],
         (err, result) => {
@@ -401,7 +402,7 @@ app.post(
 app.get("/projects/:projectId/documents", isAuthenticated, (req, res) => {
   const { projectId } = req.params;
 
-  const q = `SELECT id, name, file_type, file_size, upload_date, description 
+  const q = `SELECT id, name, file_type, file_size, upload_date, description, download_count
              FROM documents 
              WHERE project_id = ? 
              ORDER BY upload_date DESC`;
@@ -425,12 +426,57 @@ app.get("/projects/:projectId/documents", isAuthenticated, (req, res) => {
 });
 
 //______________________________________________ Download Document ______//
+// app.get("/documents/:id/download", isAuthenticated, (req, res) => {
+//   const { id } = req.params;
+
+//   const q = `SELECT name, file_path, file_type FROM documents WHERE id = ?`;
+
+//   db.query(q, [id], (err, results) => {
+//     if (err) {
+//       console.error("Error fetching document:", err);
+//       return res.status(500).json({ error: "Failed to fetch document" });
+//     }
+
+//     if (results.length === 0) {
+//       return res.status(404).json({ error: "Document not found" });
+//     }
+
+//     const document = results[0];
+//     const filePath = path.resolve(document.file_path);
+
+//     // Check if file exists
+//     if (!fs.existsSync(filePath)) {
+//       return res.status(404).json({ error: "File not found on server" });
+//     }
+
+//     // Set appropriate headers
+//     res.setHeader("Content-Type", document.file_type);
+//     res.setHeader(
+//       "Content-Disposition",
+//       `attachment; filename="${document.name}"`
+//     );
+
+//     // Create read stream and pipe to response
+//     const fileStream = fs.createReadStream(filePath);
+//     fileStream.pipe(res);
+
+//     // Handle stream errors
+//     fileStream.on("error", (err) => {
+//       console.error("File stream error:", err);
+//       res.status(500).json({ error: "Error streaming file" });
+//     });
+//   });
+// });
+
+// Download Document (with download count tracking)
 app.get("/documents/:id/download", isAuthenticated, (req, res) => {
   const { id } = req.params;
+  const userId = req.user.id;
 
-  const q = `SELECT name, file_path, file_type FROM documents WHERE id = ?`;
+  // First get the document details
+  const getQuery = `SELECT name, file_path, file_type, is_secure FROM documents WHERE id = ?`;
 
-  db.query(q, [id], (err, results) => {
+  db.query(getQuery, [id], (err, results) => {
     if (err) {
       console.error("Error fetching document:", err);
       return res.status(500).json({ error: "Failed to fetch document" });
@@ -448,11 +494,23 @@ app.get("/documents/:id/download", isAuthenticated, (req, res) => {
       return res.status(404).json({ error: "File not found on server" });
     }
 
+    // Increment download count (non-blocking)
+    db.query(
+      "UPDATE documents SET download_count = download_count + 1 WHERE id = ?",
+      [id],
+      (updateErr) => {
+        if (updateErr) {
+          console.error("Failed to update download count:", updateErr);
+          // Don't fail the request if count update fails
+        }
+      }
+    );
+
     // Set appropriate headers
     res.setHeader("Content-Type", document.file_type);
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="${document.name}"`
+      `attachment; filename="${encodeURIComponent(document.name)}"`
     );
 
     // Create read stream and pipe to response
@@ -466,7 +524,6 @@ app.get("/documents/:id/download", isAuthenticated, (req, res) => {
     });
   });
 });
-
 //______________________________________________ Delete Document ______//
 app.delete("/documents/:id", isAuthenticated, (req, res) => {
   const { id } = req.params;
