@@ -72,14 +72,14 @@ const ProjectUpdate = () => {
         setProject((current) => {
           return {
             ...current,
-            name: res.data[0].name,
-            description: res.data[0].description,
-            location: res.data[0].location,
-            start_date: res.data[0].start_date,
-            end_date: res.data[0].end_date,
-            status: res.data[0].status,
-            budget: res.data[0].budget,
-            expenses: res.data[0].expenses,
+            name: res.data.name,
+            description: res.data.description,
+            location: res.data.location,
+            start_date: res.data.start_date,
+            end_date: res.data.end_date,
+            status: res.data.status,
+            budget: res.data.budget,
+            expenses: res.data.expenses,
           };
         });
       })

@@ -88,11 +88,11 @@ const UpdateInventory = () => {
         const fetchedData = res.data;
         setInventory({
           ...inventory,
-          item_name: fetchedData[0].item_name,
-          quantity: fetchedData[0].quantity,
-          pricePerUnit: fetchedData[0].pricePerUnit,
-          status: fetchedData[0].status,
-          supplier_id: fetchedData[0].supplier_id,
+          item_name: fetchedData.item_name,
+          quantity: fetchedData.quantity,
+          pricePerUnit: fetchedData.pricePerUnit,
+          status: fetchedData.status,
+          supplier_id: fetchedData.supplier_id,
         });
       })
       .catch((err) => console.log(err));

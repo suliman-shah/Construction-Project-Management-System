@@ -283,24 +283,20 @@ const ProjectResourcesList = () => {
           </div>
           {/* ProjectResources Table */}
           {loading ? (
-            <>
-              <Spinner animation="border" />
-              <p
-                style={{ color: "white", backgroundColor: "rgba(0,0,0, 0.5)" }}
-              >
-                The database for the Construction Project Management System has
-                not been uploaded yet, which is why the{" "}
-                <b> Project Resources </b> list is empty. Please be patient , it
-                will be uploaded soon.
-              </p>
-            </>
+            <div className="d-flex justify-content-center my-5">
+              <Spinner animation="border" variant="primary" />
+            </div>
           ) : (
+            // <>
+            //   <Spinner animation="border" />
+
+            // </>
             <>
               <div className="table-responsive ">
                 <table className="table table-custom  ">
                   <thead>
                     <tr>
-                      <th>id</th>
+                      {/* <th>id</th> */}
                       <th>Project</th>
                       <th>Resources</th>
                       <th>Quantity used </th>
@@ -320,8 +316,8 @@ const ProjectResourcesList = () => {
                           } // Navigate to ProjectResources detail on row click
                           style={{ cursor: "pointer" }} // Add pointer to indicate it's clickable
                         >
-                          <td>{ProjectResources.id}</td>
-                          <td>{ProjectResources.name}</td>
+                          {/* <td>{ProjectResources.id}</td> */}
+                          <td>{ProjectResources.project_name}</td>
                           <td>{ProjectResources.item_name}</td>
                           <td>
                             <span style={{ color: "ompleted" }}>
@@ -331,7 +327,7 @@ const ProjectResourcesList = () => {
 
                           <td>
                             <div className="d-flex justify-content-around">
-                              <OverlayTrigger overlay={<Tooltip>View</Tooltip>}>
+                              {/* <OverlayTrigger overlay={<Tooltip>View</Tooltip>}>
                                 <Link
                                   style={{ borderRadius: "50%" }}
                                   to={`/ProjectResources/detail/${ProjectResources.id}`}
@@ -339,7 +335,7 @@ const ProjectResourcesList = () => {
                                 >
                                   <Visibility />
                                 </Link>
-                              </OverlayTrigger>
+                              </OverlayTrigger> */}
                               <OverlayTrigger overlay={<Tooltip>Edit</Tooltip>}>
                                 <Link
                                   style={{ borderRadius: "50%" }}

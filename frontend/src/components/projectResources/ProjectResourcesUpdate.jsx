@@ -76,7 +76,8 @@ const ProjectResourcesUpdate = () => {
     // Fetch project resource by id
     getProjectResourcesById(id)
       .then((res) => {
-        const resourceData = res.data[0];
+        console.log("project resourses api=", res.data);
+        const resourceData = res.data;
         setProjectResources({
           project_id: resourceData.project_id,
           resource_id: resourceData.resource_id,

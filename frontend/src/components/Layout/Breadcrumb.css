@@ -1,0 +1,92 @@
+/* Fully transparent breadcrumbs with animations */
+.transparent-breadcrumbs {
+  position: relative;
+  z-index: 100;
+}
+
+.transparent-breadcrumbs .breadcrumb {
+  background-color: transparent !important;
+  --bs-breadcrumb-divider: "›";
+  padding: 0.5rem 1rem;
+  margin: 0;
+}
+
+/* White divider with smooth transition */
+.transparent-breadcrumbs .breadcrumb-item + .breadcrumb-item::before {
+  color: white !important;
+  opacity: 0.7;
+  content: var(--bs-breadcrumb-divider, "›");
+  transition: all 0.3s ease;
+}
+
+/* Active breadcrumb item */
+.transparent-breadcrumbs .breadcrumb-item.active {
+  color: white !important;
+  opacity: 0.9;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Breadcrumb links with animations */
+.transparent-breadcrumbs .breadcrumb-item a {
+  color: white !important;
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Hover effects */
+.transparent-breadcrumbs .breadcrumb-item a:hover {
+  color: white !important;
+  opacity: 1;
+  transform: translateY(-1px);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Optional: Underline animation on hover */
+.transparent-breadcrumbs .breadcrumb-item a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.transparent-breadcrumbs .breadcrumb-item a:hover::after {
+  width: 100%;
+}
+
+/* Active item animation */
+.transparent-breadcrumbs .breadcrumb-item.active {
+  animation: pulse-opacity 2s infinite alternate;
+}
+
+@keyframes pulse-opacity {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .transparent-breadcrumbs .breadcrumb {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Simplify animations on mobile */
+  .transparent-breadcrumbs .breadcrumb-item a:hover {
+    transform: none;
+  }
+
+  .transparent-breadcrumbs .breadcrumb-item a::after {
+    display: none;
+  }
+}

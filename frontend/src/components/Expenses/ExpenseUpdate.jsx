@@ -162,10 +162,10 @@ const ExpenseUpdate = () => {
     getExpensesById(id)
       .then((res) => {
         setExpenses({
-          project_id: res.data[0].project_id,
-          amount: res.data[0].amount,
-          description: res.data[0].description,
-          date: res.data[0].date,
+          project_id: res.data.project_id,
+          amount: res.data.amount,
+          description: res.data.description,
+          date: res.data.date,
         });
       })
       .catch((err) => console.log(err));

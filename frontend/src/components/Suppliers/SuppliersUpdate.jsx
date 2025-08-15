@@ -23,13 +23,14 @@ const SuppliersUpdate = () => {
   useEffect(() => {
     getSuppliersById(id)
       .then((res) => {
+        console.log("API Response:", res); // Add this line to inspect the response
         setSuppliers((currentdata) => {
           return {
             ...currentdata,
-            name: res.data[0].name,
-            phone: res.data[0].phone,
-            email: res.data[0].email,
-            address: res.data[0].address,
+            name: res.data.name,
+            phone: res.data.phone,
+            email: res.data.email,
+            address: res.data.address,
           };
         });
       })

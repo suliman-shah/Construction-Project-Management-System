@@ -311,18 +311,13 @@ const InventoryList = () => {
           </div>
           {/* Task Table */}
           {loading ? (
-            <>
-              <Spinner animation="border" />
-
-              <p
-                style={{ color: "white", backgroundColor: "rgba(0,0,0, 0.5)" }}
-              >
-                The database for the Construction Project Management System has
-                not been uploaded yet, which is why the <b> Inventory </b> list
-                is empty. Please be patient , it will be uploaded soon.
-              </p>
-            </>
+            <div className="d-flex justify-content-center my-5">
+              <Spinner animation="border" variant="primary" />
+            </div>
           ) : (
+            // <>
+            //   <Spinner animation="border" />
+            // </>
             <>
               <div className="table-responsive ">
                 <table className="table table-custom  ">

@@ -70,7 +70,8 @@ const Navbar = () => {
     >
       <div className="container-fluid">
         <Link to="/" className="navbar-brand logo">
-          VireoBuild
+          {/* VireoBuild */}
+          CPMS
         </Link>
         {/* <Link to="/" className="nav-link dashboard-link">
           Dashboard
@@ -113,17 +114,17 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/projects/add">
+                  <Link className="dropdown-item" to="/projects/new">
                     <i className="bi bi-plus-circle me-2"></i>
                     <span>Add Project</span>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link className="dropdown-item" to="/projects/timeline">
                     <i className="bi bi-calendar-range me-2"></i>
                     <span>Project Timeline</span>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
 
@@ -146,17 +147,17 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/tasks/add">
+                  <Link className="dropdown-item" to="/tasks/new">
                     <i className="bi bi-plus-square me-2"></i>
                     <span>Add Task</span>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link className="dropdown-item" to="/tasks/calendar">
                     <i className="bi bi-calendar-check me-2"></i>
                     <span>Task Calendar</span>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
 
@@ -179,17 +180,17 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/employees/add">
+                  <Link className="dropdown-item" to="/employees/new">
                     <i className="bi bi-person-plus me-2"></i>
                     <span>Add Employee</span>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link className="dropdown-item" to="/employees/schedule">
                     <i className="bi bi-calendar-week me-2"></i>
                     <span>Employee Schedule</span>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
 
@@ -276,7 +277,8 @@ const Navbar = () => {
                   <li>
                     <span className="dropdown-item-text">
                       <i className="bi bi-person me-2"></i>
-                      {user.firstName}
+                      {user.firstName.charAt(0).toUpperCase() +
+                        user.firstName.slice(1).toLowerCase()}
                     </span>
                   </li>
                   <li>
@@ -297,6 +299,15 @@ const Navbar = () => {
                       Logout
                     </button>
                   </li>
+                  {/* <li>
+                    <hr className="dropdown-divider" />
+                  </li> */}
+                  {/* <li>
+                    <Link className="dropdown-item" to="/signup">
+                      <i className="bi bi-person-plus me-2"></i>
+                      create Account
+                    </Link>
+                  </li> */}
                 </ul>
               ) : (
                 <ul

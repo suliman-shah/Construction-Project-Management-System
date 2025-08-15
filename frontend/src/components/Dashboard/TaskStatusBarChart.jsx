@@ -153,17 +153,19 @@ import {
 } from "recharts";
 import "./TaskStatusBarChart.css"; // Import your amazing styling here
 import { Link } from "react-router-dom";
+import { getAllProject_Tasks_status } from "../../services/dashboardServices";
 
 const TaskStatusBarChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     // Fetch project task status data from the API
-    fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/projects-task-status`)
-      .then((response) => response.json())
-      .then((data) => {
+    getAllProject_Tasks_status()
+      // .then((response) => response.json())
+
+      .then((res) => {
         // Transform the data into the format needed for the bar chart
-        const chartData = data.flatMap((project) =>
+        const chartData = res.data.flatMap((project) =>
           project.tasks.map((task) => ({
             projectName: project.name,
             taskName: task.name,
@@ -213,7 +215,16 @@ const TaskStatusBarChart = () => {
 
   if (!data.length)
     return (
-      <Link to={"/tasks/new"} className="btn btn-primary">
+      // <Link to={"/tasks/new"} className="btn btn-primary ">
+      //   <i className="bi bi-plus-square me-2"></i>
+      //   Add New Task
+      // </Link>
+
+      <Link
+        to={"/tasks/new"}
+        className="btn btn-primary d-block w-100 w-md-auto"
+      >
+        <i className="bi bi-plus-square me-2"></i>
         Add New Task
       </Link>
     );

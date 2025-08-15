@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useSearchParams } from "react-router-dom";
-import axios from "axios";
+
 import RangeInputWithBubble from "./RangeInputWithBubble";
 import BudgetExpenseComparison from "./BudgetExpenseComparison";
 import { UploadFile } from "@mui/icons-material"; // Or any other icon library
@@ -39,12 +39,15 @@ import { deleteTask } from "../../services/taskService";
 // import "C:/Users/PMLS/Documents/CONSTRUCTION App/frontend/src/components/Projects/ProjectDetail.css";
 import "./ProjectDetail.css";
 import DocumentUploadModal from "../DocumentUploadModal/DocumentUploadModal";
+import axios from "../../api/axios";
 function ProjectDetails() {
-  const [searchParms] = useSearchParams();
-  const { project_id } = Object.fromEntries([...searchParms]);
-  console.log("project_id=", project_id);
+  // const [searchParms] = useSearchParams();
+  // const { project_id } = Object.fromEntries([...searchParms]);
+  // console.log("project_id=", project_id);
+  const { id } = useParams(); // Get project ID from URL path
+  console.log("Project ID:", id); // Verify this works
 
-  const { id } = useParams(); // Get project ID from URL
+  // // Get project ID from URL
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [filteredTask, setFilteredTask] = useState([]);
@@ -64,6 +67,7 @@ function ProjectDetails() {
   const [filteredExpenses, setFilteredExpenses] = useState(expenses);
   const [documents, setDocuments] = useState([]);
   const [searchDoc, setSearchDoc] = useState("");
+
   // In your ProjectDetails.jsx component
   const [showUploadModal, setShowUploadModal] = useState(false);
 
@@ -77,26 +81,28 @@ function ProjectDetails() {
   };
 
   useEffect(() => {
-    // Fetch all necessary data concurrently
     const fetchData = async () => {
       try {
-        const projectResponse = await axios.get(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/projects/${id}`
-        );
-        const tasksResponse = await axios.get(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/task?project_id=${id}`
-        );
+        const projectResponse = await axios.get(`/projects/${id}`);
+        const tasksResponse = await axios.get(`/task?project_id=${id}`);
         const employeesResponse = await axios.get(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/employees?project_id=${id}`
+          `/employees?project_id=${id}`
         );
-        const expensesResponse = await axios.get(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/expenses?project_id=${id}`
-        );
+        const expensesResponse = await axios.get(`/expenses?project_id=${id}`);
         const projectResourceResponse = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_BASE_URL
-          }/projectResources?project_id=${id}`
+          `/projectResources?project_id=${id}`
         );
+
+        console.log("Project response:", projectResponse.data); // Should show your project object
+
+        // Set the project data directly from response.data
+        setProject(projectResponse.data);
+        setTasks(tasksResponse.data);
+        setEmployees(employeesResponse.data);
+        setExpenses(expensesResponse.data);
+        setprojectResources(projectResourceResponse.data);
+
+        // Rest of your employee options fetching...
         getAllEmployees()
           .then((res) => {
             const employeeOptions = res.data.map((employee) => ({
@@ -106,28 +112,61 @@ function ProjectDetails() {
             setEmployeesOption(employeeOptions);
           })
           .catch((err) => console.error("Error fetching employees:", err));
-
-        console.log("projectResponse", projectResponse);
-        console.log("tasksRespons", tasksResponse);
-        console.log("employeesResponse", employeesResponse);
-        console.log("expensesResponse", expensesResponse);
-        console.log("projectResourceResponse", projectResourceResponse);
-
-        setProject(projectResponse.data[0]);
-        setTasks(tasksResponse.data);
-        setEmployees(employeesResponse.data);
-        setExpenses(expensesResponse.data);
-
-        setprojectResources(projectResourceResponse.data);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching project details:", error);
+        setProject(null); // Explicitly set to null if there's an error
+      } finally {
         setLoading(false);
       }
     };
 
     fetchData();
   }, [id]);
+  // useEffect(() => {
+  //   // Fetch all necessary data concurrently
+  //   const fetchData = async () => {
+  //     try {
+  //       const projectResponse = await axios.get(`/projects/${id}`);
+
+  //       const tasksResponse = await axios.get(`/task?project_id=${id}`);
+  //       const employeesResponse = await axios.get(
+  //         `/employees?project_id=${id}`
+  //       );
+  //       const expensesResponse = await axios.get(`/expenses?project_id=${id}`);
+  //       const projectResourceResponse = await axios.get(
+  //         `/projectResources?project_id=${id}`
+  //       );
+  //       getAllEmployees()
+  //         .then((res) => {
+  //           const employeeOptions = res.data.map((employee) => ({
+  //             value: employee.id,
+  //             label: `${employee.first_name} ${employee.last_name}`,
+  //           }));
+  //           setEmployeesOption(employeeOptions);
+  //         })
+  //         .catch((err) => console.error("Error fetching employees:", err));
+
+  //       console.log("projectResponse", projectResponse);
+  //       console.log("tasksRespons", tasksResponse);
+  //       console.log("employeesResponse", employeesResponse);
+  //       console.log("expensesResponse", expensesResponse);
+  //       console.log("projectResourceResponse", projectResourceResponse);
+
+  //       setProject(projectResponse.data); //remove data[0]
+  //       setTasks(tasksResponse.data);
+  //       setEmployees(employeesResponse.data);
+  //       setExpenses(expensesResponse.data);
+
+  //       setprojectResources(projectResourceResponse.data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching project details:", error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [id]);
   // Handle range input change
   const handleRangeChange = (e) => {
     const value = e.target.value;
@@ -833,7 +872,10 @@ function ProjectDetails() {
 
         <Tab
           eventKey="documents"
-          title={<UploadFile style={{ fontSize: "1.2rem" }} />}
+          // title={<UploadFile style={{ fontSize: "1.2rem" }} />}
+          title={
+            <i className="bi bi-file-earmark" style={{ fontSize: "1.2rem" }} />
+          }
           className="documents-tab"
         >
           <Row className="mb-3">
@@ -859,7 +901,8 @@ function ProjectDetails() {
             </Col>
             <Col className="text-end">
               <Button variant="primary" onClick={handleShowUploadModal}>
-                Upload Document
+                Upload documents &nbsp;
+                <UploadFile style={{ fontSize: "1.2rem" }} />
               </Button>
             </Col>
           </Row>

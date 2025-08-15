@@ -120,6 +120,7 @@ import { Bar } from "react-chartjs-2";
 import "chartjs-plugin-datalabels";
 import { Link } from "react-router-dom";
 import "./ProjectBudgetExpensesChart.css"; // Import your custom styles
+import { getAllProject_Budget_vs_Expenses } from "../../services/dashboardServices";
 
 function ProjectBudgetExpensesChart() {
   const [chartData, setChartData] = useState(null);
@@ -158,13 +159,14 @@ function ProjectBudgetExpensesChart() {
   });
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/projects-budget-expenses`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          const labels = data.map((project) => project.project_name);
-          const budgets = data.map((project) => project.budget);
-          const expenses = data.map((project) => project.total_expenses);
+    // fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/projects-budget-expenses`)
+    getAllProject_Budget_vs_Expenses()
+      // .then((response) => response.json())
+      .then((res) => {
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          const labels = res.data.map((project) => project.project_name);
+          const budgets = res.data.map((project) => project.budget);
+          const expenses = res.data.map((project) => project.total_expenses);
 
           const budgetColors = budgets.map(() => "rgba(75, 192, 192, 1)");
           const expenseColors = expenses.map((expense, index) =>
@@ -201,7 +203,15 @@ function ProjectBudgetExpensesChart() {
 
   if (!chartData)
     return (
-      <Link to="/Project/new" className="btn btn-primary">
+      // <Link to="/Projects/new" className="btn btn-primary ">
+      //   <i className="bi bi-plus-circle me-2"></i>
+      //   Add New Project
+      // </Link>
+      <Link
+        to={"/projects/new"}
+        className="btn btn-primary d-block w-100 w-md-auto"
+      >
+        <i className="bi bi-plus-circle me-2"></i>
         Add New Project
       </Link>
     );

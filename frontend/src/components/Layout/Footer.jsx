@@ -42,7 +42,7 @@ const Footer = () => {
           {/* Logo and About Section */}
           <div className="footer-section" style={{ "--section-index": 0 }}>
             <Link to="/" className="footer-logo">
-              VireoBuild
+              CPMS
             </Link>
             <p className="footer-description">
               Providing professional construction management solutions with
@@ -61,10 +61,10 @@ const Footer = () => {
                 <Link to="/tasks">Tasks</Link>
               </li>
               <li>
-                <Link to="/employees">Team</Link>
+                <Link to="/employees">Employees</Link>
               </li>
               <li>
-                <Link to="/resources">Resources</Link>
+                <Link to="/inventory">Inventory</Link>
               </li>
             </ul>
           </div>
@@ -76,9 +76,9 @@ const Footer = () => {
               <li>
                 <Link to="/inventory">Inventory Management</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/suppliers">Supplier Network</Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/expenses">Financial Tracking</Link>
               </li>
@@ -93,11 +93,14 @@ const Footer = () => {
             <h5>Contact Us</h5>
             <div className="contact-info">
               <i className="bi bi-geo-alt"></i>
-              <span>123 Construction Ave, City, Country</span>
+              <span>
+                Near University of Malakand, Batkhela, Malakand Division, KPK,
+                Pakistan
+              </span>
             </div>
             <div className="contact-info">
               <i className="bi bi-envelope"></i>
-              <span>contact@vireobuild.com</span>
+              <span>contact@CPMS.com</span>
             </div>
             <div className="contact-info">
               <i className="bi bi-telephone"></i>
@@ -123,9 +126,7 @@ const Footer = () => {
             </a>
           </div>
           <div className="copyright">
-            <p>
-              &copy; {new Date().getFullYear()} VireoBuild. All rights reserved.
-            </p>
+            <p>&copy; {new Date().getFullYear()} CPMS. All rights reserved.</p>
           </div>
         </div>
       </div>

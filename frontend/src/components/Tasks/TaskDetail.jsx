@@ -108,7 +108,7 @@ const TaskDetail = () => {
     <div className="container mt-3">
       <Card className="shadow-lg border-0 p-4 wide-card">
         <Card.Header className="text-center text-white card-header-custom">
-          {task[0].name[0].toUpperCase() + task[0].name.substring(1)} Details
+          {task.name[0].toUpperCase() + task.name.substring(1)} Details
         </Card.Header>
         <Card.Body>
           <div className="details">
@@ -117,7 +117,7 @@ const TaskDetail = () => {
                 <strong>Name:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {task[0].name[0].toUpperCase() + task[0].name.substring(1)}
+                {task.name[0].toUpperCase() + task.name.substring(1)}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -125,8 +125,8 @@ const TaskDetail = () => {
                 <strong>Description:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {task[0].description[0].toUpperCase() +
-                  task[0].description.substring(1)}
+                {task.description[0].toUpperCase() +
+                  task.description.substring(1)}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -134,7 +134,7 @@ const TaskDetail = () => {
                 <strong>Project:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {projectLookup[task[0].project_id] || task[0].project_id}
+                {projectLookup[task.project_id] || task.project_id}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -142,7 +142,7 @@ const TaskDetail = () => {
                 <strong>Start Date:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {task[0].start_date}
+                {task.start_date}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -150,7 +150,7 @@ const TaskDetail = () => {
                 <strong>End Date:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {task[0].end_date}
+                {task.end_date}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -158,7 +158,7 @@ const TaskDetail = () => {
                 <strong>Assigned To:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {employeeLookup[task[0].assigned_to] || "N/A"}
+                {employeeLookup[task.assigned_to] || "N/A"}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -166,8 +166,7 @@ const TaskDetail = () => {
                 <strong>Priority:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {task[0].priority[0].toUpperCase() +
-                  task[0].priority.substring(1)}
+                {task.priority[0].toUpperCase() + task.priority.substring(1)}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -175,18 +174,18 @@ const TaskDetail = () => {
                 <strong>Status:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {task[0].status == "Completed" ? (
-                  <span style={{ color: "#00c445" }}>{task[0].status}</span>
+                {task.status == "Completed" ? (
+                  <span style={{ color: "#00c445" }}>{task.status}</span>
                 ) : (
                   ""
                 )}
-                {task[0].status == "In-Progress" ? (
-                  <span style={{ color: "#ff8528" }}>{task[0].status}</span>
+                {task.status == "In-Progress" ? (
+                  <span style={{ color: "#ff8528" }}>{task.status}</span>
                 ) : (
                   ""
                 )}
-                {task[0].status == "Not-Started" ? (
-                  <span style={{ color: "#f20505" }}>{task[0].status}</span>
+                {task.status == "Not-Started" ? (
+                  <span style={{ color: "#f20505" }}>{task.status}</span>
                 ) : (
                   ""
                 )}

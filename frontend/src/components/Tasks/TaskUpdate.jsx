@@ -56,6 +56,9 @@ const TaskUpdate = () => {
 
   const [searchParms] = useSearchParams();
   const { project_id } = Object.fromEntries([...searchParms]);
+  console.log("project_id", project_id);
+
+  const { id } = useParams();
   const [task, setTask] = useState({
     name: "",
     project_id: null,
@@ -71,14 +74,15 @@ const TaskUpdate = () => {
   const [projectEmployees, setProjectEmployees] = useState([]);
   const [errors, setErrors] = useState({});
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const { id } = useParams();
+
   const navigate = useNavigate();
 
   useEffect(() => {
     getTaskById(id).then((res) => {
-      setTask(res.data[0]);
-      if (res.data[0].project_id) {
-        getProjectEmployees(res.data[0].project_id)
+      console.log("API response=", res.data);
+      setTask(res.data);
+      if (res.data.project_id) {
+        getProjectEmployees(res.data.project_id)
           .then((employeeRes) => {
             setProjectEmployees(employeeRes.data);
           })

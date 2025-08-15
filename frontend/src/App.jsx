@@ -47,7 +47,9 @@ import { useAuth } from "./components/Auth/AuthContext";
 import ChangePassword from "./components/Auth/ChangePassword";
 import AuthLayout from "./components/Auth/AuthLayout";
 import DocumentUploadModal from "./components/DocumentUploadModal/DocumentUploadModal";
+import SuppliersDetail from "./components/Suppliers/SuppliersDetail";
 
+import TransparentBreadcrumbs from "./components/Layout/TransparentBreadcrumbs";
 function App() {
   const { user } = useAuth();
 
@@ -58,6 +60,7 @@ function App() {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
+              {user && <TransparentBreadcrumbs />} {/* Add this line */}
               <div className="content pt-4">
                 <Routes>
                   {/* Public routes */}
@@ -112,10 +115,10 @@ function App() {
                       path="/suppliers/update/:id"
                       element={<SuppliersUpdate />}
                     />
-                    {/* <Route
-                  path="/suppliers/detail/:id"
-                  element={<SuppliersDetail />}
-                /> */}
+                    <Route
+                      path="/suppliers/detail/:id"
+                      element={<SuppliersDetail />}
+                    />
                     {/* Inventory */}
                     <Route path="/inventory" element={<InventoryPage />} />
                     <Route path="/inventory/new" element={<InventoryForm />} />

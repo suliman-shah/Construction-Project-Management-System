@@ -90,7 +90,7 @@ const ExpenseDetails = () => {
     <div className="container mt-3">
       <Card className="shadow-lg border-0 p-4 wide-card">
         <Card.Header className="text-center text-white card-header-custom">
-          {projectLookup[expenses[0].project_id] || expenses[0].project_id}
+          {projectLookup[expenses.project_id] || expenses.project_id}
           {" / "}
           expenses Details
         </Card.Header>
@@ -101,8 +101,7 @@ const ExpenseDetails = () => {
                 <strong>Expenses Incurred by project:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {projectLookup[expenses[0].project_id] ||
-                  expenses[0].project_id}
+                {projectLookup[expenses.project_id] || expenses.project_id}
               </Col>
             </Row>
             <Row className="mb-3">
@@ -111,7 +110,7 @@ const ExpenseDetails = () => {
               </Col>
               <Col className="col-data" md={8}>
                 <span style={{ color: "#00c445" }}>PKR </span>
-                {expenses[0].amount}{" "}
+                {expenses.amount}{" "}
               </Col>
             </Row>
 
@@ -120,7 +119,7 @@ const ExpenseDetails = () => {
                 <strong>Expense Date:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                <span style={{ color: "#ff8528" }}>{expenses[0].date}</span>
+                <span style={{ color: "#ff8528" }}>{expenses.date}</span>
               </Col>
             </Row>
             <Row className="mb-3">
@@ -128,8 +127,8 @@ const ExpenseDetails = () => {
                 <strong>Description:</strong>
               </Col>
               <Col className="col-data" md={8}>
-                {expenses[0].description[0].toUpperCase() +
-                  expenses[0].description.substring(1)}
+                {expenses.description[0].toUpperCase() +
+                  expenses.description.substring(1)}
               </Col>
             </Row>
           </div>
