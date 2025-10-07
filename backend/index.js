@@ -1867,7 +1867,7 @@ app.use(express.json()); // middleware enable express to understand json data
 
 // Add request logging middleware here
 app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
+  console.log(`Incoming requests: ${req.method} ${req.url}`);
   next();
 });
 
